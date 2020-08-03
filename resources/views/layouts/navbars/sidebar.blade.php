@@ -24,27 +24,55 @@ Tip 2: you can also add an image using data-image tag
                         <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
                     </i>
                     <p>
-                        {{ __('Users Setting') }}
+                        {{ __('Data Peserta') }}
                         <b class="caret"></b>
                     </p>
                 </a>
                 <div class="collapse @if($activeButton =='laravel') show @endif" id="laravelExamples">
                     <ul class="nav">
-                        <li class="nav-item @if($activePage == 'user') active @endif">
-                            <a class="nav-link" href="{{route('profile.edit')}}">
+                        <li class="nav-item @if($activePage == 'data-peserta') active @endif">
+                            <a class="nav-link" href="{{route('data-peserta')}}">
                                 <i class="nc-icon nc-single-02"></i>
-                                <p>{{ __("User Profile") }}</p>
+                                <p>{{ __("Semua Peserta") }}</p>
                             </a>
                         </li>
-                        <li class="nav-item @if($activePage == 'user-management') active @endif">
-                            <a class="nav-link" href="{{route('user.index')}}">
+                        <li class="nav-item @if($activePage == 'subscribed-peserta') active @endif">
+                            <a class="nav-link" href="{{route('subscribed-peserta')}}">
                                 <i class="nc-icon nc-circle-09"></i>
-                                <p>{{ __("User Management") }}</p>
+                                <p>{{ __("Subscribed") }}</p>
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            {{-- <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#laravelExamples" @if($activeButton =='laravel') aria-expanded="true" @endif>
+                    <i>
+                        <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
+                    </i>
+                    <p>
+                        {{ __('Pelatihan') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse @if($activeButton =='laravel') show @endif" id="laravelExamples">
+                    <ul class="nav">
+                        <li class="nav-item @if($activePage == 'data-peserta') active @endif">
+                            <a class="nav-link" href="{{route('data-peserta')}}">
+                                <i class="nc-icon nc-single-02"></i>
+                                <p>{{ __("Semua Peserta") }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item @if($activePage == 'subscribed-peserta') active @endif">
+                            <a class="nav-link" href="{{route('subscribed-peserta')}}">
+                                <i class="nc-icon nc-circle-09"></i>
+                                <p>{{ __("Subscribed") }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li> --}}
 
             <li class="nav-item @if($activePage == 'table') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'table')}}">
@@ -52,36 +80,29 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Table List") }}</p>
                 </a>
             </li>
-            {{-- <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
-                    <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Typography") }}</p>
+
+            <li class="nav-item @if($activePage == 'products-details') active @endif">
+                <a class="nav-link" href="{{route('product-details')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Produk") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'icons')}}">
-                    <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Icons") }}</p>
+
+            
+            <li class="nav-item @if($activePage == 'webinar') active @endif">
+                <a class="nav-link" href="{{route('table-webinar')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Data Webinar") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'maps') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'maps')}}">
-                    <i class="nc-icon nc-pin-3"></i>
-                    <p>{{ __("Maps") }}</p>
+
+            <li class="nav-item @if($activePage == 'create-webinar') active @endif">
+                <a class="nav-link" href="{{route('create-webinar')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Create Webinar") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'notifications')}}">
-                    <i class="nc-icon nc-bell-55"></i>
-                    <p>{{ __("Notifications") }}</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active bg-danger" href="{{route('page.index', 'upgrade')}}">
-                    <i class="nc-icon nc-alien-33"></i>
-                    <p>{{ __("Upgrade to PRO") }}</p>
-                </a>
-            </li> --}}
+
         </ul>
     </div>
 </div>

@@ -52,6 +52,19 @@ Route::group(['prefix' => 'admin'], function () {
 	Auth::routes();
 
 	Route::get('/home', 'HomeController@index')->name('dashboard');
+	Route::get('/data-peserta', 'PesertaController@index')->name('data-peserta');
+	Route::get('/subscribe-peserta', 'PesertaController@subscribed')->name('subscribed-peserta');
+	Route::get('/product/details', 'PesertaController@subscribed')->name('product-details');
+
+	// WEBINAR 
+	Route::group(['prefix' => 'webinar'], function (){
+		Route::get('table', 'WebinarController@table')->name('table-webinar');
+		Route::get('create', 'WebinarController@create')->name('create-webinar');
+		Route::post('store', 'WebinarController@store')->name('store-webinar');
+		Route::get('edit/{id}', 'WebinarController@edit')->name('edit-webinar');
+		Route::get('update', 'WebinarController@update')->name('update-webinar');
+	});
+	
 
 	Route::group(['middleware' => 'auth'], function () {
 		Route::resource('user', 'UserController', ['except' => ['show']]);

@@ -24,19 +24,14 @@
 
                             {{-- RESPON SUKSES --}}
                             @if (Session::has('message'))
-                            <p class="alert alert-danger"></p>
-                            {{Session::get('message')}}
+                            <p class="alert alert-success">
+                                {{Session::get('message')}}
+                            </p>
                             {{Session::put('message', null)}}
                             @endif
-
-                            {{-- - RESPON ERROR -
-                            @if (Session::has('error'))
-                            <div class="alert alert-danger">{{Session::get('error')}}
-                        </div>
-                        {{Session::put('error'), null}}
-                        @endif --}}
-
-                        @if ($errors->any())
+                        
+                        {{-- RESPON ERROR --}}
+                        {{-- @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -44,7 +39,7 @@
                                 @endforeach
                             </ul>
                         </div><br />
-                        @endif
+                        @endif --}}
 
                         <form class="row contact_form" action="{{route('store-register')}}" method="post"
                             novalidate="novalidate">
@@ -53,6 +48,12 @@
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="name" name="nama_lengkap" value=""
                                     placeholder="Nama Lengkap" required>
+                                    @if ($errors->has('nama_lengkap'))
+                                    <div id="nama_lengkap-error" class="error text-danger pl-3" for="nama_lengkap"
+                                        style="display: block;">
+                                        <strong>{{ $errors->first('nama_lengkap') }}</strong>
+                                    </div>
+                                    @endif
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="email" class="form-control" id="email" name="email" value=""
@@ -66,11 +67,23 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" value=""
-                                    placeholder="Nomor Handphone" required>
+                                    placeholder="Nomor Handphone" maxlength="" required>
+                                    @if ($errors->has('nomor_hp'))
+                                    <div id="nomor_hp-error" class="error text-danger pl-3" for="nomor_hp"
+                                        style="display: block;">
+                                        <strong>{{ $errors->first('nomor_hp') }}</strong>
+                                    </div>
+                                    @endif
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="password" class="form-control" id="password" name="password" value=""
                                     placeholder="Password" required>
+                                    @if ($errors->has('password'))
+                                    <div id="password-error" class="error text-danger pl-3" for="password"
+                                        style="display: block;">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </div>
+                                    @endif
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="password" class="form-control" id="password_confirmation"
@@ -80,7 +93,7 @@
                                 <button type="submit" value="submit" class="btn_3">
                                     Daftar
                                 </button>
-                                <a class="lost_pass" href="#">Sudah Punya Akun?</a>
+                                <a class="lost_pass" href="{{route('login-peserta')}}">Sudah Punya Akun?</a>
                             </div>
                         </form>
                     </div>

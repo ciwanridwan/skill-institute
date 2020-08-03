@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Session;
 
 class PesertaController extends Controller
 {
+    public function dashboard()
+    {
+        return view('peserta.dashboard');
+    }
+
     public function storeRegister(Request $request)
     {
         if (
@@ -15,14 +20,23 @@ class PesertaController extends Controller
         ) {
             Session::put('error', 'Semua Field Harus Diisi');
         }
+
+        $customErrorMessage = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah digunakan',
+            'digits_between' => 'Nomor handphone maksimal 13 number',
+            'min' => 'password minimal 6 karakter',
+            'confirmed' => 'Password tidak sesuai dengan konfirmasi password, cek kembali password yang diinput'
+        ];
         $this->validate(
             $request,
             [
                 'nama_lengkap' => 'required|string|max:255',
-                'email' => 'required|email|unique',
-                'nomor_hp' => 'required|max:14',
-                'password' => 'required|min:6|confirmed',
-            ]
+                'email' => 'required|email|unique:pesertas',
+                'nomor_hp' => 'required|digits_between:1,13',
+                'password' => 'required|string|min:6|confirmed',
+            ], 
+            $customErrorMessage,
         );
 
         if (!auth()->guard('peserta')->check()) {
@@ -63,7 +77,7 @@ class PesertaController extends Controller
         //DARI GUARD PESERTA, KITA ATTEMPT PROSESNYA DARI DATA $AUTH
         if (auth()->guard('peserta')->attempt($auth)) {
             //JIKA BERHASIL MAKA AKAN DIREDIRECT KE DASHBOARD
-            return redirect()->intended(route('peserta-dashboard'));
+            return redirect()->intended(route('dashboard-peserta'));
         }
         //JIKA GAGAL MAKA REDIRECT KEMBALI BERSERTA NOTIFIKASI
         return redirect()->back()->with(['error' => 'Email / Password Salah, Atau Kurang Cocok']);
@@ -71,6 +85,12 @@ class PesertaController extends Controller
 
     public function logoutUser()
     {
+
+    }
+
+    public function subscribed()
+    {
+        return view('admin.peserta.subscribed');
     }
     /**
      * Display a listing of the resource.
@@ -79,7 +99,8 @@ class PesertaController extends Controller
      */
     public function index()
     {
-        //
+        $peserta = Peserta::all();
+        return view('admin.peserta.index')->with('peserta', $peserta);
     }
 
     /**
