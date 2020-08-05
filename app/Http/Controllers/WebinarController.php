@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Webinar;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class WebinarController extends Controller
 {
+    public function details($id)
+    {
+        $details = Webinar::find($id);
+        return view('webinars.details')->with('details', $details);
+    }
+
     public function table()
     {
-        return view('admin.webinars.index');
+        $webinar = Webinar::all();
+        return view('admin.webinars.index')->with('webinar', $webinar);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +29,8 @@ class WebinarController extends Controller
      */
     public function index()
     {
-        return view('webinar.index');
+        $webinar = Webinar::all();
+        return view('webinar.index')->with('webinar', $webinar);
     }
 
     /**
@@ -61,7 +72,7 @@ class WebinarController extends Controller
             $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
             $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
             $extension = $request->file('gambar')->getClientOriginalExtension();
-            $fileNameToStore = $fileName . '_' . time() . '' . $extension;
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
             $path = $request->file('gambar')->storeAs('public/gambar', $fileNameToStore);
         } else {
             $fileNameToStore = 'noimage.jpg';
@@ -105,7 +116,8 @@ class WebinarController extends Controller
      */
     public function edit($id)
     {
-        //
+        $webinar = Webinar::find($id);
+        return view('admin.webinars.edit')->with('webinar', $webinar);
     }
 
     /**
@@ -117,7 +129,37 @@ class WebinarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $webinar = Webinar::find($id);
+        // dd($webinar);
+        $webinar->judul = $request->input('judul');
+        $webinar->harga = $request->input('harga');
+        $webinar->tipe = $request->input('tipe');
+        $webinar->trainer = $request->input('trainer');
+        $webinar->deskripsi = $request->input('deskripsi');
+        $webinar->alat_webinar = $request->input('alat_webinar');
+        $webinar->publish = $request->input('publish');
+        $webinar->jadwal = $request->input('jadwal');
+        $webinar->link = $request->input('link');
+        $webinar->kuota_pendaftaran = $request->input('kuota_pendaftaran');
+
+        if ($request->hasFile('gambar')) {
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambar', $fileNameToStore);
+            $webinar->gambar = $fileNameToStore;
+
+            $select_old_gambar_name = DB::table('webinars')->where('id', $request->id)->first();
+
+            if ($select_old_gambar_name != 'noimage.jpg') {
+                Storage::delete('public/gambar', $select_old_gambar_name->gambar);
+            }
+        }
+
+        $webinar->update();
+        Session::put('success', 'Data Webinar Berhasil Diperbaharui');
+        return redirect('/admin/webinar/table');
     }
 
     /**

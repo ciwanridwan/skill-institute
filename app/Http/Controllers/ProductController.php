@@ -6,10 +6,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function details()
-    {
-        return view('products.details');
-    }
     /**
      * Display a listing of the resource.
      *

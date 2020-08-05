@@ -1,5 +1,5 @@
-@extends('layouts.app', ['activePage' => 'create-webinar', 'title' => 'Create Webinar', 'navName' => 'Create Webinar',
-'activeButton' => 'create-webinar'])
+@extends('layouts.app', ['activePage' => 'edit-webinar', 'title' => 'Edit Webinar', 'navName' => 'Edit Webinar',
+'activeButton' => 'edit-webinar'])
 
 @section('content')
 <div class="content">
@@ -18,12 +18,12 @@
                         @endif
                         <div class="row align-items-center">
                             <div class="col-md-8">
-                                <h3 class="mb-0">{{ __('Tambah Webinar') }}</h3>
+                                <h3 class="mb-0">{{ __('Edit Webinar') }}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('store-webinar') }}" autocomplete="off"
+                        <form method="post" action="{{ route('update-webinar', $webinar->id) }}" autocomplete="off"
                             enctype="multipart/form-data">
                             @csrf
                             @method('post')
@@ -38,7 +38,7 @@
                                     </label>
                                     <input type="text" name="judul" id="input-judul"
                                         class="form-control{{ $errors->has('judul') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Judul') }}" value="" required autofocus>
+                                        placeholder="{{ __('Judul') }}" value="{{$webinar->judul}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'judul'])
                                 </div>
@@ -49,7 +49,7 @@
                                     </label>
                                     <input type="number" name="harga" id="input-harga"
                                         class="form-control{{ $errors->has('harga') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Harga') }}" value="" required autofocus>
+                                        placeholder="{{ __('Harga') }}" value="{{$webinar->harga}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'harga'])
                                 </div>
@@ -60,6 +60,16 @@
                                     </label>
                                     @include('alerts.feedback', ['field' => 'tipe'])
                                 </div>
+
+                                @if ($webinar->tipe == "Online")
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="tipe"
+                                            id="exampleRadios1" value="Online" checked>
+                                        <span class="form-check-sign"></span>
+                                        Online
+                                    </label>
+                                </div>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="tipe"
@@ -67,7 +77,8 @@
                                         <span class="form-check-sign"></span>
                                         Offline
                                     </label>
-                                </div>
+                                </div>    
+                                @else
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="tipe"
@@ -76,14 +87,22 @@
                                         Online
                                     </label>
                                 </div>
-
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="tipe"
+                                            id="exampleRadios1" value="Offline" checked>
+                                        <span class="form-check-sign"></span>
+                                        Offline
+                                    </label>
+                                </div>    
+                                @endif
                                 <div class="form-group{{ $errors->has('trainer') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-trainer">
-                                        <i class="w3-xxlarge fa fa-user"></i>{{ __('Trainer') }}
+                                        <i class="w3-xxlarge fa fa-user"></i>{{ __('Traineer') }}
                                     </label>
                                     <input type="text" name="trainer" id="input-trainer"
                                         class="form-control{{ $errors->has('trainer') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Trainer') }}" value="" required autofocus>
+                                        placeholder="{{ __('Trainer') }}" value="{{$webinar->trainer}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'trainer'])
                                 </div>
@@ -94,7 +113,7 @@
                                     </label>
                                     <input type="text" name="alat_webinar" id="input-alat_webinar"
                                         class="form-control{{ $errors->has('alat_webinar') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Alat Webinar') }}" value="" required autofocus>
+                                        placeholder="{{ __('Alat Webinar') }}" value="{{$webinar->alat_webinar}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'alat_webinar'])
                                 </div>
@@ -105,10 +124,11 @@
                                     </label>
                                     @include('alerts.feedback', ['field' => 'publish'])
                                 </div>
+                                @if ($webinar->publish == "Ya")
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="publish"
-                                            id="exampleRadios1" value="Ya">
+                                            id="exampleRadios1" value="Ya" checked>
                                         <span class="form-check-sign"></span>
                                         Ya
                                     </label>
@@ -121,6 +141,25 @@
                                         Tidak
                                     </label>
                                 </div>
+                                @else
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="publish"
+                                            id="exampleRadios1" value="Ya">
+                                        <span class="form-check-sign"></span>
+                                        Ya
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-radio">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="publish"
+                                            id="exampleRadios1" value="Tidak" checked>
+                                        <span class="form-check-sign"></span>
+                                        Tidak
+                                    </label>
+                                </div>
+                                @endif
+                                
 
 
                                 <div class="form-group{{ $errors->has('jadwal') ? ' has-danger' : '' }}">
@@ -129,7 +168,7 @@
                                     </label>
                                     <input type="date" name="jadwal" id="input-jadwal"
                                         class="form-control{{ $errors->has('jadwal') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Jadwal') }}" value="" required autofocus>
+                                        placeholder="{{ __('Jadwal') }}" value="{{$webinar->jadwal}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'jadwal'])
                                 </div>
@@ -140,7 +179,7 @@
                                     </label>
                                     <input type="url" name="link" id="input-link"
                                         class="form-control{{ $errors->has('link') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Link') }}" value="" required autofocus>
+                                        placeholder="{{ __('Link') }}" value="{{$webinar->link}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'link'])
                                 </div>
@@ -151,7 +190,7 @@
                                     </label>
                                     <input type="number" name="kuota_pendaftaran" id="input-kuota_pendaftaran"
                                         class="form-control{{ $errors->has('kuota_pendaftaran') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Kuota Pendaftaran') }}" value="" required autofocus>
+                                        placeholder="{{ __('Kuota Pendaftaran') }}" value="{{$webinar->kuota_pendaftaran}}" required autofocus>
 
                                     @include('alerts.feedback', ['field' => 'kuota_pendaftaran'])
                                 </div>
@@ -162,7 +201,7 @@
                                     </label>
                                     <input type="file" name="gambar" id="input-gambar"
                                         class="form-control{{ $errors->has('gambar') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Upload Gambar Webinar') }}" value="" required autofocus>
+                                        placeholder="{{ __('Upload Gambar Webinar') }}" value="{{$webinar->gambar}}">
 
                                     @include('alerts.feedback', ['field' => 'gambar'])
                                 </div>
@@ -172,7 +211,7 @@
                                         <i class="w3-xxlarge fa fa-commenting-o"></i>{{ __('deskripsi') }}
                                     </label>
                                     <textarea class="form-control" placeholder="Isi Deskripsi Webinar" name="deskripsi"
-                                        rows="5"></textarea>
+                                        rows="5">{{$webinar->deskripsi}}</textarea>
                                     {{-- <input type="text" name="deskripsi" id="input-deskripsi"
                                         class="form-control{{ $errors->has('deskripsi') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('deskripsi') }}" value=""

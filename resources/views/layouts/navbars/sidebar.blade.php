@@ -103,6 +103,48 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
 
+            <li class="nav-item @if($activePage == 'create-training') active @endif">
+                <a class="nav-link" href="{{route('create-training')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Create Training") }}</p>
+                </a>
+            </li>
+
+            <li class="nav-item @if($activePage == 'data-training') active @endif">
+                <a class="nav-link" href="{{route('data-training')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Data Training") }}</p>
+                </a>
+            </li>
+
+            <li class="nav-item @if($activePage == 'create-level') active @endif">
+                <a class="nav-link" href="{{route('create-level')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Create Level") }}</p>
+                </a>
+            </li>
+
+            <li class="nav-item @if($activePage == 'table-level') active @endif">
+                <a class="nav-link" href="{{route('table-level')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("List Level") }}</p>
+                </a>
+            </li>
+
+            <li class="nav-item @if($activePage == 'create-kategori') active @endif">
+                <a class="nav-link" href="{{route('create-kategori')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("Create Kategori") }}</p>
+                </a>
+            </li>
+            
+            <li class="nav-item @if($activePage == 'table-kategori') active @endif">
+                <a class="nav-link" href="{{route('table-kategori')}}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __("List Kategori") }}</p>
+                </a>
+            </li>
+
         </ul>
     </div>
 </div>

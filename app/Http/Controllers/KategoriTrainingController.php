@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class KategoriTrainingController extends Controller
 {
@@ -13,7 +15,8 @@ class KategoriTrainingController extends Controller
      */
     public function index()
     {
-        //
+        $kategori = Kategori::all();
+        return view('admin.kategori.index')->with('kategori', $kategori);
     }
 
     /**
@@ -23,7 +26,7 @@ class KategoriTrainingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kategori.create');
     }
 
     /**
@@ -34,7 +37,20 @@ class KategoriTrainingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customMessage =  [
+            'required' => ':attribute harus diisi'
+        ];
+        $this->validate($request,
+        [
+            'nama' => 'required|string|max:255'
+        ], $customMessage);
+
+        $kategori = new Kategori();
+        $kategori->nama = $request->input('nama');
+        $kategori->save();
+
+        Session::put('success', 'Kategori Berhasil Ditambah');
+        return redirect()->back();
     }
 
     /**
@@ -56,7 +72,8 @@ class KategoriTrainingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategori = Kategori::find($id);
+        return view('admin.kategori.edit')->with('kategori', $kategori);
     }
 
     /**
@@ -68,7 +85,11 @@ class KategoriTrainingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->nama = $request->input('nama');
+        $kategori->update();
+        Session::put('success', 'Kategori Berhasil Diperbaharui');
+        return redirect('admin/pelatihan/kategori/table');   
     }
 
     /**

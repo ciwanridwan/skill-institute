@@ -20,8 +20,8 @@ class CreatePelatihansTable extends Migration
             $table->string('tipe');
             $table->string('trainer');
             $table->string('kode_unik_voucher');
-            $table->unsignedBigInteger('kategori_id');
-            $table->string('level_kesulitan');
+            $table->string('kategori');
+            $table->string('level');
             $table->string('pengalaman_kerja_peserta');
             $table->string('kemampuan_dasar_peserta');
             $table->string('kemampuan_teknis_peserta');

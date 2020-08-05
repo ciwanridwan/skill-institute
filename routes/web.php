@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	return view('shops.index');
+	return view('trainings.index');
 });
 
 // PESERTA
@@ -32,12 +32,11 @@ route::post('/store-login', 'PesertaController@storeLogin')->name('store-login')
 
 // WEBINAR
 route::get('/webinar', 'WebinarController@index')->name('webinar');
+route::get('/webinar/details', 'WebinarController@details')->name('details-webinar');
 
-// SHOP
-route::get('/shop', 'ShopController@index')->name('shop');
-
-// PRODUCT
-route::get('/product-details', 'ProductController@details')->name('product');
+// TRAINING
+route::get('/trainings', 'TrainingController@index')->name('trainings');
+route::get('/trainings/details/{id}', 'TrainingController@details')->name('training-details');
 
 Route::group(['middleware' => 'peserta'], function() {
     Route::get('dashboard', 'PesertaController@dashboard')->name('dashboard-peserta');
@@ -56,13 +55,36 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::get('/subscribe-peserta', 'PesertaController@subscribed')->name('subscribed-peserta');
 	Route::get('/product/details', 'PesertaController@subscribed')->name('product-details');
 
+	// TRAINING
+	Route::group(['prefix' => 'pelatihan'], function (){
+		Route::get('table', 'TrainingController@table')->name('data-training');
+		Route::get('create', 'TrainingController@create')->name('create-training');
+		Route::post('store', 'TrainingController@store')->name('store-training');
+		Route::get('edit/{id}', 'TrainingController@edit')->name('edit-training');
+		Route::post('update/{id}', 'TrainingController@update')->name('update-training');
+		
+		// LEVEL TRAINING
+		Route::get('level-training/create', 'LevelTrainingController@create')->name('create-level');
+		Route::post('level-training/store', 'LevelTrainingController@store')->name('store-level');
+		Route::get('level-training/table', 'LevelTrainingController@index')->name('table-level');
+		Route::get('level-training/edit/{id}', 'LevelTrainingController@edit')->name('edit-level');
+		Route::post('level-training/update/{id}', 'LevelTrainingController@update')->name('update-level');
+
+		// KATEGORI TRAINING
+		Route::get('kategori/create', 'KategoriTrainingController@create')->name('create-kategori');
+		Route::post('kategori/store', 'KategoriTrainingController@store')->name('store-kategori');
+		Route::get('kategori/table', 'KategoriTrainingController@index')->name('table-kategori');
+		Route::get('kategori/edit/{id}', 'KategoriTrainingController@edit')->name('edit-kategori');
+		Route::post('kategori/update/{id}', 'KategoriTrainingController@update')->name('update-kategori');
+	});
+
 	// WEBINAR 
 	Route::group(['prefix' => 'webinar'], function (){
 		Route::get('table', 'WebinarController@table')->name('table-webinar');
 		Route::get('create', 'WebinarController@create')->name('create-webinar');
 		Route::post('store', 'WebinarController@store')->name('store-webinar');
 		Route::get('edit/{id}', 'WebinarController@edit')->name('edit-webinar');
-		Route::get('update', 'WebinarController@update')->name('update-webinar');
+		Route::post('update/{id}', 'WebinarController@update')->name('update-webinar');
 	});
 	
 

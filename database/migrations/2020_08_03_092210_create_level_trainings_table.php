@@ -14,7 +14,7 @@ class CreateLevelTrainingsTable extends Migration
     public function up()
     {
         Schema::create('level_trainings', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nama');
             $table->timestamps();
         });

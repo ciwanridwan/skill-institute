@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'webinar', 'title' => 'Webinar', 'navName' => 'Data Webinar', 'activeButton' => 'webinar'])
+@extends('layouts.app', ['activePage' => 'training', 'title' => 'Pelatihan', 'navName' => 'Data Training', 'activeButton' => 'training'])
 
 @section('content')
     <div class="content">
@@ -10,24 +10,25 @@
                             @if (Session::has('success'))
                             <p class="alert alert-success">
                                 {{Session::get('success')}}
-                                
                             </p>
                             {{Session::put('success', null)}}
                             @endif
-                            <h4 class="card-title">Data Webinar</h4>
+                            <h4 class="card-title">Data Pelatihan</h4>
                         </div>
                         <div class="card-body table-full-width table-responsive">
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <th>ID</th>
                                     <th>Gambar</th>
-                                    <th>Judul</th>
-                                    <th>Jadwal</th>
-                                    <th>Link</th>
-                                    <th>Kuota Pendaftaran</th>
+                                    <th>Nama</th>
+                                    <th>Trainer</th>
                                     <th>Harga</th>
                                     <th>Tipe</th>
-                                    <th>Trainer</th>
+                                    <th>Bahan Materi</th>
+                                    <th>Kode Unik Voucher</th>
+                                    <th>Kategori</th>
+                                    <th>Level</th>
+                                    <th>Alat Training</th>
                                     <th>Publish</th>
                                     <th>Action</th>
                                 </thead>
@@ -35,25 +36,27 @@
                                     @php
                                         $nomor = 1;
                                     @endphp
-                                    @forelse ($webinar as $item)
+                                    @forelse ($training as $item)
                                     <tr>
                                         <td>{{$nomor}}</td>
-                                        <td><img src="{{ asset('storage/gambar/' . $item->gambar) }}" alt="" style="width: 200px; height: 200px"></td>
-                                        <td>{{$item->judul}}</td>
-                                        <td>{{$item->jadwal}}</td>
-                                        <td>{{$item->link}}</td>
-                                        <td>{{$item->kuota_pendaftaran}}</td>
+                                        <td><img src="{{ asset('storage/gambar_pelatihan/' . $item->gambar) }}" alt="" style="width: 200px; height: 200px;"></td>
+                                        <td>{{$item->nama}}</td>
+                                        <td>{{$item->trainer}}</td>
                                         <td>{{$item->harga}}</td>
                                         <td>{{$item->tipe}}</td>
-                                        <td>{{$item->trainer}}</td>
+                                        <td>{{$item->bahan_materi}}</td>
+                                        <td>{{$item->kode_unik_voucher}}</td>
+                                        <td>{{$item->kategori}}</td>
+                                        <td>{{$item->level}}</td>
+                                        <td>{{$item->alat_training}}</td>
                                         <td>{{$item->publish}}</td>
-                                        <td><a href="{{route('edit-webinar', $item->id)}}" class="btn btn-warning">Edit</a></td>
+                                        <td><a href="{{route('edit-training', $item->id) }}" class="btn btn-warning">Edit</a></td>
                                     </tr>    
                                     @php
                                         $nomor = $nomor + 1;
                                     @endphp
                                     @empty
-                                    <tr><td colspan="11" class="text-center text-primary">Belum Ada Data</td></tr>
+                                        <td colspan="11">Belum Ada Data</td>
                                     @endforelse
                                 </tbody>
                             </table>
