@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class WebinarController extends Controller
 {
+    public function pesertaWebinar()
+    {
+        return view('peserta.webinars.index');
+    }
     public function details($id)
     {
         $details = Webinar::find($id);
@@ -30,7 +34,7 @@ class WebinarController extends Controller
     public function index()
     {
         $webinar = Webinar::all();
-        return view('webinar.index')->with('webinar', $webinar);
+        return view('webinars.index')->with('webinar', $webinar);
     }
 
     /**
@@ -170,6 +174,10 @@ class WebinarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $webinar = Webinar::find($id);
+        $webinar->delete();
+
+        Session::put('success', 'Webinar Berhasil Dihapus');
+        return redirect()->back();
     }
 }

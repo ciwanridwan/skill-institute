@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'subscribed-peserta', 'title' => 'Subscribed Peserta', 'navName' => 'Subscribed', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'subscribed-peserta', 'title' => 'Subscribed Peserta', 'navName' => 'Subscribed', 'activeButton' => 'peserta'])
 
 @section('content')
     <div class="content">

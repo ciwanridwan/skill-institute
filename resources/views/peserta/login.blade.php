@@ -22,10 +22,12 @@
                         <div class="login_part_form_iner">
                             <h3>Selamat Datang<br> Silahkan Login Terlebih dahulu !</h3>
                             @if (Session::has('error'))
-                                <div class="alert alert danger"> </div>
-                                {{Session::get('error')}}
-                                {{Session::put('error', null)}}
+                                <div class="alert alert-danger">
+                                    {{Session::get('error')}}
+                                    {{Session::put('error', null)}}
+                                 </div>                            
                             @endif
+
                             <form class="row contact_form" action="{{route('store-login')}}" method="post" novalidate="novalidate">
                                 @csrf
                                 @method('post')

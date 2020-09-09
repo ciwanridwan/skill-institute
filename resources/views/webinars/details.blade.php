@@ -11,7 +11,7 @@
                     <div class="col-lg-12">
                         <div class="product_img_slide owl-carousel">
                             <div class="single_product_img">
-                                <img src="{{ asset ('storage/gambar_pelatihan/'. $details->gambar)}}" alt="#" class="img-fluid">
+                                <img src="{{ asset ('storage/gambar/'. $details->gambar)}}" alt="#" class="img-fluid" style="width: 500px; height: 500px;">
                             </div>                           
                         </div>
                     </div>

@@ -1,6 +1,6 @@
-@extends('layouts.app', ['activePage' => 'create-training', 'title' => 'Create Training', 'navName' => 'Create
-Training',
-'activeButton' => 'create-training'])
+@extends('layouts.app', ['activePage' => 'create-training', 'title' => 'Create Training', 'navName' => 'Tambah
+Pelatihan',
+'activeButton' => 'training'])
 
 @section('content')
 <div class="content">
@@ -12,9 +12,12 @@ Training',
                 <div class="card col-md-12">
                     <div class="card-header">
                         @if (Session::has('success'))
-                        <p class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{Session::get('success')}}
-                        </p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         {{Session::put('success'), }}
                         @endif
                         <div class="row align-items-center">
@@ -226,7 +229,7 @@ Training',
                                     <label class="form-control-label" for="input-deskripsi">
                                         <i class="w3-xxlarge fa fa-commenting-o"></i>{{ __('deskripsi') }}
                                     </label>
-                                    <textarea class="form-control" placeholder="Isi Deskripsi Webinar" name="deskripsi"
+                                    <textarea class="form-control" placeholder="Isi Deskripsi Training" name="deskripsi"
                                         rows="5"></textarea>
 
                                     @include('alerts.feedback', ['field' => 'deskripsi'])

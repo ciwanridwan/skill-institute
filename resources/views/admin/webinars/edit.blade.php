@@ -14,7 +14,7 @@
                             <p class="alert alert-success">
                                 {{Session::get('success')}}
                             </p>
-                            {{Session::put('success'), }}
+                            {{Session::put('success'), null}}
                         @endif
                         <div class="row align-items-center">
                             <div class="col-md-8">

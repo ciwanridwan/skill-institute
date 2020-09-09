@@ -12,6 +12,28 @@ use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
+    public function historyTraining()
+    {
+        return view('peserta.trainings.history');
+    }
+
+    public function pesertaTraining()
+    {
+        return view('peserta.trainings.index');
+    }
+
+    public function trainingOnline()
+    {
+        $online = Pelatihan::where('tipe', '=', 'Online')->where('publish', '=', 'Ya')->get();
+        return view('trainings.online')->with('online', $online);
+    }
+
+    public function trainingOffline()
+    {
+        $offline = Pelatihan::where('tipe', '=', 'Offline')->where('publish', '=', 'Ya')->get();
+        return view('trainings.offline')->with('offline', $offline);
+    }
+
     public function details($id)
     {
         $details = Pelatihan::find($id);
@@ -186,6 +208,10 @@ class TrainingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $training = Pelatihan::find($id);
+        $training->delete();
+
+        Session::put('success', 'Berhasil Dihapus');
+        return redirect()->back();
     }
 }

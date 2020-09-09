@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim & UPDIVISION', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'Dashboard', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('content')
     <div class="content">
@@ -7,19 +7,19 @@
                 <div class="col-md-4">
                     <div class="card ">
                         <div class="card-header ">
-                            <h4 class="card-title">{{ __('Email Statistics') }}</h4>
-                            <p class="card-category">{{ __('Last Campaign Performance') }}</p>
+                            <h4 class="card-title">{{ __('Pelatihan Terbanyak Diminati') }}</h4>
+                            <p class="card-category">{{ __('Tahun 2020') }}</p>
                         </div>
                         <div class="card-body ">
                             <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
                             <div class="legend">
-                                <i class="fa fa-circle text-info"></i> {{ __('Open') }}
+                                {{-- <i class="fa fa-circle text-info"></i> {{ __('Open') }}
                                 <i class="fa fa-circle text-danger"></i> {{ __('Bounce') }}
-                                <i class="fa fa-circle text-warning"></i> {{ __('Unsubscribe') }}
+                                <i class="fa fa-circle text-warning"></i> {{ __('Unsubscribe') }} --}}
                             </div>
                             <hr>
                             <div class="stats">
-                                <i class="fa fa-clock-o"></i> {{ __('Campaign sent 2 days ago') }}
+                                <i class="fa fa-clock-o"></i> {{ __('Terupdate 2 menit yang lalu') }}
                             </div>
                         </div>
                     </div>
@@ -27,8 +27,8 @@
                 <div class="col-md-8">
                     <div class="card ">
                         <div class="card-header ">
-                            <h4 class="card-title">{{ __('Users Behavior') }}</h4>
-                            <p class="card-category">{{ __('24 Hours performance') }}</p>
+                            <h4 class="card-title">{{ __('Peningkatan Peserta') }}</h4>
+                            <p class="card-category">{{ __('Pantauan 24 Jam') }}</p>
                         </div>
                         <div class="card-body ">
                             <div id="chartHours" class="ct-chart"></div>

@@ -85,7 +85,8 @@ class PesertaController extends Controller
 
     public function logoutUser()
     {
-
+        auth()->guard('peserta')->logout(); //JADI KITA LOGOUT SESSION DARI GUARD PESERTA
+        return redirect('/login');
     }
 
     public function subscribed()
@@ -141,9 +142,9 @@ class PesertaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('peserta.profile.edit');
     }
 
     /**
@@ -153,9 +154,29 @@ class PesertaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        auth()->guard('peserta')->user()->update($request->all());
+
+        return back()->withStatus(__('Profile Berhasil Diperbaharui.'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request,
+        [
+            'old_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed|different:old_password',
+            'password_confirmation' => 'required|string|min:6'
+        ]);
+        auth()->guard('peserta')->user()->update([
+            'password' => $request->password
+        ]);
+        if (!$request->password) {
+            Session::put('errors', 'Gagal ganti password, silahkan cek lagi password yang di input');
+        }
+
+        return back()->withPasswordStatus(__('Password Berhasil Diperbaharui.'));
     }
 
     /**

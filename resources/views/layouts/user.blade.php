@@ -22,13 +22,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/slick.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+    {{-- @yield('background-image-create') --}}
 </head>
 
 <body>
     @include('layouts.header.header')
     {{--- CONTENT ---}}
     @yield('content')
-
+    @include('layouts.shop-method.index')
     {{--- END CONTENT ---}}
     <footer>
         <!-- Footer Start-->
@@ -84,7 +85,7 @@
     <script src="{{ asset('assets/js/popper.min.js')}}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
     <!-- Jquery Mobile Menu -->
-    <script src="{{('assets/js/jquery.slicknav.min.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.slicknav.min.js')}}"></script>
 
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="{{ asset('assets/js/owl.carousel.min.js')}}"></script>

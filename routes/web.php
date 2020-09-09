@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PesertaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,13 +15,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-	return view('trainings.index');
-});
+// Add Training
+Route::get('/add-training/{id}', 'AddUserTrainingController@create')->name('add-user-trainings');
+Route::post('/store-add-training', 'AddUserTrainingController@store')->name('store-add-user-trainings');
+Route::get('/button-create/{id}', 'AddUserTrainingController@buttonCreate')->name('button-create');
 
 // PESERTA
-// route::get('dashboard', 'PesertaController@dashboard')->name('dashboard');
+Route::get('/', 'TrainingController@index')->name('trainings-index');
+Route::get('/chart/add', 'ChartController@create')->name('add-chart');
+Route::post('/chart/store-add', 'ChartController@store')->name('store-chart');
+Route::get('/chart', 'ChartController@index')->name('index-chart');
+Route::get('/chart/display', 'ChartController@displayChart')->name('display-chart');
 
 // REGISTER
 route::get('/register', 'PesertaController@register')->name('register-peserta');
@@ -32,14 +37,27 @@ route::post('/store-login', 'PesertaController@storeLogin')->name('store-login')
 
 // WEBINAR
 route::get('/webinar', 'WebinarController@index')->name('webinar');
-route::get('/webinar/details', 'WebinarController@details')->name('details-webinar');
+route::get('/webinar/details/{id}', 'WebinarController@details')->name('details-webinar');
 
 // TRAINING
-route::get('/trainings', 'TrainingController@index')->name('trainings');
-route::get('/trainings/details/{id}', 'TrainingController@details')->name('training-details');
+route::get('/training', 'TrainingController@index')->name('trainings');
+Route::group(['prefix' => 'training'], function () {
+	route::get('/details/{id}', 'TrainingController@details')->name('training-details');
+	route::get('/offline', 'TrainingController@trainingOffline')->name('training-offline');
+	route::get('/online', 'TrainingController@trainingOnline')->name('training-online');
+});
 
-Route::group(['middleware' => 'peserta'], function() {
-    Route::get('dashboard', 'PesertaController@dashboard')->name('dashboard-peserta');
+Route::group(['middleware' => 'peserta'], function () {
+	Route::group(['prefix' => 'user'], function () {
+		Route::get('edit', 'PesertaController@edit')->name('edit-peserta');
+		Route::get('pelatihan', 'TrainingController@pesertaTraining')->name('user-training');
+		Route::get('pelatihan/history', 'TrainingController@historyTraining')->name('history-training');
+		Route::get('webinar', 'WebinarController@pesertaWebinar')->name('user-webinar');
+		Route::get('dashboard', 'PesertaController@dashboard')->name('dashboard-peserta');
+		Route::patch('update', 'PesertaController@update')->name('update-peserta');
+		Route::patch('update-password', 'PesertaController@updatePassword')->name('update-password');
+		Route::post('logout', 'PesertaController@logoutUser')->name('logout-peserta');
+	});
 });
 
 // Route::get('/password-reset', 'MailController@sendEmailResetPassword');
@@ -56,37 +74,45 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::get('/product/details', 'PesertaController@subscribed')->name('product-details');
 
 	// TRAINING
-	Route::group(['prefix' => 'pelatihan'], function (){
+	Route::group(['prefix' => 'pelatihan'], function () {
 		Route::get('table', 'TrainingController@table')->name('data-training');
 		Route::get('create', 'TrainingController@create')->name('create-training');
 		Route::post('store', 'TrainingController@store')->name('store-training');
 		Route::get('edit/{id}', 'TrainingController@edit')->name('edit-training');
 		Route::post('update/{id}', 'TrainingController@update')->name('update-training');
-		
+		Route::post('delete/{id}', 'TrainingController@destroy')->name('delete-training');
+
 		// LEVEL TRAINING
-		Route::get('level-training/create', 'LevelTrainingController@create')->name('create-level');
-		Route::post('level-training/store', 'LevelTrainingController@store')->name('store-level');
-		Route::get('level-training/table', 'LevelTrainingController@index')->name('table-level');
-		Route::get('level-training/edit/{id}', 'LevelTrainingController@edit')->name('edit-level');
-		Route::post('level-training/update/{id}', 'LevelTrainingController@update')->name('update-level');
+		Route::group(['prefix' => 'level-training'], function () {
+			Route::get('create', 'LevelTrainingController@create')->name('create-level');
+			Route::post('store', 'LevelTrainingController@store')->name('store-level');
+			Route::get('table', 'LevelTrainingController@index')->name('table-level');
+			Route::get('edit/{id}', 'LevelTrainingController@edit')->name('edit-level');
+			Route::post('update/{id}', 'LevelTrainingController@update')->name('update-level');
+			Route::post('delete/{id}', 'LevelTrainingController@destroy')->name('hapus-level');
+		});
 
 		// KATEGORI TRAINING
-		Route::get('kategori/create', 'KategoriTrainingController@create')->name('create-kategori');
-		Route::post('kategori/store', 'KategoriTrainingController@store')->name('store-kategori');
-		Route::get('kategori/table', 'KategoriTrainingController@index')->name('table-kategori');
-		Route::get('kategori/edit/{id}', 'KategoriTrainingController@edit')->name('edit-kategori');
-		Route::post('kategori/update/{id}', 'KategoriTrainingController@update')->name('update-kategori');
+		Route::group(['prefix' => 'kategori'], function () {
+			Route::get('create', 'KategoriTrainingController@create')->name('create-kategori');
+			Route::post('store', 'KategoriTrainingController@store')->name('store-kategori');
+			Route::get('table', 'KategoriTrainingController@index')->name('table-kategori');
+			Route::get('edit/{id}', 'KategoriTrainingController@edit')->name('edit-kategori');
+			Route::post('update/{id}', 'KategoriTrainingController@update')->name('update-kategori');
+			Route::post('delete/{id}', 'KategoriTrainingController@destroy')->name('delete-kategori');
+		});
 	});
 
 	// WEBINAR 
-	Route::group(['prefix' => 'webinar'], function (){
+	Route::group(['prefix' => 'webinar'], function () {
 		Route::get('table', 'WebinarController@table')->name('table-webinar');
 		Route::get('create', 'WebinarController@create')->name('create-webinar');
 		Route::post('store', 'WebinarController@store')->name('store-webinar');
 		Route::get('edit/{id}', 'WebinarController@edit')->name('edit-webinar');
 		Route::post('update/{id}', 'WebinarController@update')->name('update-webinar');
+		Route::post('delete/{id}', 'WebinarController@destroy')->name('delete-webinar');
 	});
-	
+
 
 	Route::group(['middleware' => 'auth'], function () {
 		Route::resource('user', 'UserController', ['except' => ['show']]);

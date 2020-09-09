@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\LevelTraining;
+use App\Chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class LevelTrainingController extends Controller
+class ChartController extends Controller
 {
+    public function displayChart()
+    {
+        $result = Chart::where('name', '=', 'Laptop')->orderBy('year', 'ASC')->get();
+        return response()->json($result);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +20,7 @@ class LevelTrainingController extends Controller
      */
     public function index()
     {
-        $level = LevelTraining::all();
-        return view('admin.level.index')->with('level', $level);
+        return view('charts.index');
     }
 
     /**
@@ -26,7 +30,7 @@ class LevelTrainingController extends Controller
      */
     public function create()
     {
-        return view('admin.level.create');
+        return view('charts.create');
     }
 
     /**
@@ -37,19 +41,14 @@ class LevelTrainingController extends Controller
      */
     public function store(Request $request)
     {
-        $customMessage = [
-            'required' => ':attribute tidak boleh kosong'
-        ];
+        $chart = new Chart([
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'year' => $request->get('year'),
+        ]);
+        $chart->save();
 
-        $this->validate($request, [
-            'nama' => 'required|string|max:255'
-        ], $customMessage);
-
-        $level = new LevelTraining();
-        $level->nama = $request->input('nama');
-        $level->save();
-
-        Session::put('success', 'Berhasil Menambahkan Level');
+        Session::put('success', 'Data berhasil ditambahkan');
         return redirect()->back();
     }
 
@@ -72,8 +71,7 @@ class LevelTrainingController extends Controller
      */
     public function edit($id)
     {
-        $level = LevelTraining::find($id);
-        return view('admin.level.edit')->with('level', $level);
+        //
     }
 
     /**
@@ -85,11 +83,7 @@ class LevelTrainingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $level = LevelTraining::find($id);
-        $level->nama = $request->input('nama');
-        $level->update();
-        Session::put('success', 'Level Berhasil Diperbaharui');
-        return redirect('admin/pelatihan/level-training/table');
+        //
     }
 
     /**
@@ -100,10 +94,6 @@ class LevelTrainingController extends Controller
      */
     public function destroy($id)
     {
-        $level = LevelTraining::find($id);
-        $level->delete();
-
-        Session::put('success', 'Level Pelatihan Berhasil Dihapus');
-        return redirect()->back();
+        //
     }
 }

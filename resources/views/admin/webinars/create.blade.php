@@ -1,5 +1,5 @@
 @extends('layouts.app', ['activePage' => 'create-webinar', 'title' => 'Create Webinar', 'navName' => 'Create Webinar',
-'activeButton' => 'create-webinar'])
+'activeButton' => 'webinar'])
 
 @section('content')
 <div class="content">
@@ -11,10 +11,13 @@
                 <div class="card col-md-12">
                     <div class="card-header">
                         @if (Session::has('success'))
-                            <p class="alert alert-success">
-                                {{Session::get('success')}}
-                            </p>
-                            {{Session::put('success'), }}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{Session::get('success')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {{Session::put('success'), null}}
                         @endif
                         <div class="row align-items-center">
                             <div class="col-md-8">
@@ -62,16 +65,16 @@
                                 </div>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="tipe"
-                                            id="exampleRadios1" value="Offline">
+                                        <input class="form-check-input" type="radio" name="tipe" id="exampleRadios1"
+                                            value="Offline">
                                         <span class="form-check-sign"></span>
                                         Offline
                                     </label>
                                 </div>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="tipe"
-                                            id="exampleRadios1" value="Online">
+                                        <input class="form-check-input" type="radio" name="tipe" id="exampleRadios1"
+                                            value="Online">
                                         <span class="form-check-sign"></span>
                                         Online
                                     </label>
@@ -107,16 +110,16 @@
                                 </div>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="publish"
-                                            id="exampleRadios1" value="Ya">
+                                        <input class="form-check-input" type="radio" name="publish" id="exampleRadios1"
+                                            value="Ya">
                                         <span class="form-check-sign"></span>
                                         Ya
                                     </label>
                                 </div>
                                 <div class="form-check form-check-radio">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="publish"
-                                            id="exampleRadios1" value="Tidak">
+                                        <input class="form-check-input" type="radio" name="publish" id="exampleRadios1"
+                                            value="Tidak">
                                         <span class="form-check-sign"></span>
                                         Tidak
                                     </label>

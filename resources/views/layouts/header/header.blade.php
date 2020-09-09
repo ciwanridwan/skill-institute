@@ -14,10 +14,10 @@
                         <nav>
                             <ul id="navigation">
                                 <li><a href="#">Home</a></li>
-                                <li class="hot"><a href="#">Pelatihan</a>
+                                <li class="hot"><a href="{{route('trainings-index')}}">Pelatihan</a>
                                     <ul class="submenu">
-                                        <li><a href="#">Pelatihan online</a></li>
-                                        <li><a href="#"> Pelatihan offline</a></li>
+                                        <li><a href="{{route('training-online')}}">Pelatihan online</a></li>
+                                        <li><a href="{{route('training-offline')}}"> Pelatihan offline</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="{{route('webinar')}}">Webinar</a></li>

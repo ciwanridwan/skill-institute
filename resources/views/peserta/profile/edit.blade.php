@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'edit-peserta', 'title' => 'Edit Profile', 'navName' => 'Admin Profile', 'activeButton' => 'peserta'])
+@extends('layouts.app-user', ['activePage' => 'user', 'title' => 'Profile', 'navName' => 'Edit Profile', 'activeButton' => 'laravel'])
 
 @section('content')
     <div class="content">
@@ -16,38 +16,51 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('profile.update') }}" autocomplete="off"
+                            <form method="post" action="{{ route('update-peserta') }}" autocomplete="off"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
 
-                                <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
+                                <h6 class="heading-small text-muted mb-4">{{ __('Edit Profile') }}</h6>
                                 
                                 @include('alerts.success')
                                 @include('alerts.error_self_update', ['key' => 'not_allow_profile'])
         
                                 <div class="pl-lg-4">
-                                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-name">
-                                            <i class="w3-xxlarge fa fa-user"></i>{{ __('Name') }}
+                                    <div class="form-group{{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-nama_lengkap">
+                                            <i class="w3-xxlarge fa fa-user"></i>{{ __('Nama Lengkap') }}
                                         </label>
-                                        <input type="text" name="name" id="input-name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
+                                        <input type="text" name="nama_lengkap" id="input-nama_lengkap" class="form-control{{ $errors->has('nama_lengkap') ? ' is-invalid' : '' }}" placeholder="{{ __('Nama Lengkap') }}" value="{{ old('nama_lengkap', auth()->guard('peserta')->user()->nama_lengkap) }}" required autofocus>
         
-                                        @include('alerts.feedback', ['field' => 'name'])
+                                        @include('alerts.feedback', ['field' => 'nama_lengkap'])
                                     </div>
+
                                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-email"><i class="w3-xxlarge fa fa-envelope-o"></i>{{ __('Email') }}</label>
-                                        <input type="email" name="email" id="input-email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}" required>
+                                        <input type="email" name="email" id="input-email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->guard('peserta')->user()->email) }}" required>
         
                                         @include('alerts.feedback', ['field' => 'email'])
                                     </div>
+
+                                    <div class="form-group{{ $errors->has('nomor_hp') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-nomor_hp">
+                                            <i class="w3-xxlarge fa fa-user"></i>{{ __('Nomor Handphone') }}
+                                        </label>
+                                        <input type="text" name="nomor_hp" id="input-nomor_hp" class="form-control{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nama Lengkap') }}" value="{{ old('nomor_hp', auth()->guard('peserta')->user()->nomor_hp) }}" required autofocus>
+        
+                                        @include('alerts.feedback', ['field' => 'nomor_hp'])
+                                    </div>
+
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-default mt-4">{{ __('Save') }}</button>
                                     </div>
                                 </div>
                             </form>
+
                             <hr class="my-4" />
-                            <form method="post" action="{{ route('profile.password') }}">
+
+                            <form method="post" action="{{ route('update-password') }}">
                                 @csrf
                                 @method('patch')
         
@@ -97,11 +110,14 @@
                                 <div class="author">
                                     <a href="#">
                                         <img class="avatar border-gray" src="{{ asset('assets/img/profile-account.png') }}" alt="...">
-                                        <h5 class="title">{{ old('name', Auth()->user()->name) }}</h5>
+                                        <h5 class="title">{{ old('nama_lengkap', Auth()->guard('peserta')->user()->nama_lengkap) }}</h5>
                                         <p class="description">
-                                            {{ old('email', Auth()->user()->email) }}
+                                            {{ old('email', Auth()->guard('peserta')->user()->email) }}
                                         </p>
                                     </a>
+                                    <p class="description">
+                                        {{ old('nomor_hp', Auth()->guard('peserta')->user()->nomor_hp) }}
+                                    </p>
                                 </div>
                                 {{-- <p class="description text-center">
                                 {{ __(' "Lamborghini Mercy') }}
@@ -123,7 +139,7 @@
                             </div> --}}
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

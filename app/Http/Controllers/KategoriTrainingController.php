@@ -100,6 +100,10 @@ class KategoriTrainingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+
+        Session::put('success', 'Kategori Berhasil Dihapus');
+        return redirect()->back();
     }
 }
