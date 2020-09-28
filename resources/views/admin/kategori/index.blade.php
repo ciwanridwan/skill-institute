@@ -1,5 +1,5 @@
 @extends('layouts.app', ['activePage' => 'table-kategori', 'title' => 'Kategori Pelatihan', 'navName' => 'Kategori
-Pelatihan', 'activeButton' => 'training'])
+Pelatihan', 'activeButton' => 'kategori-level'])
 
 @section('content')
 <div class="content">

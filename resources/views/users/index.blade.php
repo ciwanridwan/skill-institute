@@ -131,8 +131,8 @@
         -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text">
-                        {{ __("Creative Tim") }}
+                    <a href="{{ route('trainings-index')}}" class="simple-text">
+                        {{ __("SKILL INSTITUTE") }}
                     </a>
                 </div>
                 <ul class="nav">

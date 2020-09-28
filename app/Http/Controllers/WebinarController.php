@@ -11,6 +11,29 @@ use Illuminate\Support\Facades\Storage;
 
 class WebinarController extends Controller
 {
+    public function indexPublish()
+    {
+        $publish = Webinar::all();
+        return view('admin.webinars.publish')->with('publish', $publish);
+    }
+    public function publishWebinar($id)
+    {
+        $publish = Webinar::find($id);
+        $publish->publish = 'Ya';
+        $publish->update();
+
+        return redirect()->back();
+    }
+
+    public function unPublishWebinar($id)
+    {
+        $publish = Webinar::find($id);
+        $publish->publish = 'Tidak';
+        $publish->update();
+
+        return redirect()->back();
+    }
+
     public function pesertaWebinar()
     {
         return view('peserta.webinars.index');

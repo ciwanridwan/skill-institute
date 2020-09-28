@@ -15,4 +15,9 @@ class Peserta extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function pembayarans()
+    {
+        return $this->belongsToMany(Pembayaran::class);
+    }
 }

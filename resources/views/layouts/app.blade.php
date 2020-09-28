@@ -31,6 +31,7 @@
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="{{ asset('light-bootstrap/css/demo.css') }}" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        @yield('link-modal')
     </head>
 
     <body>
@@ -125,4 +126,5 @@
         });
       });
     </script>
+    @yield('script-modal')
 </html>

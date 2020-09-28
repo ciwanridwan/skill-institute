@@ -21,13 +21,22 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
-                    <div class="login_part_text text-center">
+                    <div class="text-center">
                         <div class="login_part_text_iner">
-                            <img src="{{ asset('storage/gambar_pelatihan/'. $buttonCreate->gambar) }}" alt="" width="350" height="300">
-                            <h2>{{$buttonCreate->nama}}</h2>
-                            <p>Yuk tambah pengalaman dan skill anda bersama kami di Skill Institute dengan mengikuti
-                                pelatihan {{$buttonCreate->nama}}</p>
-                            <a href="#" class="btn_3">RP {{ number_format($buttonCreate->harga, 2, ',', '.') }}</a>
+                            <img src="{{ asset('storage/gambar_pelatihan/'. $buttonCreate->gambar) }}" alt=""
+                                width="500" height="500">
+                            <br>
+                            <br>
+                            {{-- <h2>{{$buttonCreate->nama}}</h2> --}}
+                            <h4 style="text-align: left">Deskripsi Pelatihan</h4>
+                            <p style="text-align: left"> {{$buttonCreate->deskripsi}}</p>
+                            <br>
+                            <h4 style="text-align: left">Kategori :</h4>
+                            <p style="text-align: left">{{$buttonCreate->kategori}}</p>
+                            <br>
+                            <h4 style="text-align: left">Level :</h4>
+                            <p style="text-align: left">{{$buttonCreate->level}}</p>
+
                         </div>
                     </div>
                 </div>
@@ -38,8 +47,11 @@
 
                             {{-- RESPON SUKSES --}}
                             @if (Session::has('message'))
-                            <p class="alert alert-success">
+                            <p class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{Session::get('message')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </p>
                             {{Session::put('message', null)}}
                             @endif
@@ -55,17 +67,64 @@
                         </div><br />
                         @endif --}}
 
-                        <form class="row contact_form" action="{{route('store-register')}}" method="post"
+                        <form class="row contact_form" action="{{route('payment', $buttonCreate->id)}}" method="POST"
                             novalidate="novalidate">
                             @csrf
-                            @method('post')
+                            @method('POST')
+                            @if (auth()->guard('peserta')->check())
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="name" name="nama_lengkap" value=""
-                                    placeholder="Nama Lengkap" required>
-                                @if ($errors->has('nama_lengkap'))
-                                <div id="nama_lengkap-error" class="error text-danger pl-3" for="nama_lengkap"
+                                <label for="">Nama Peserta</label>
+                                <input type="text" class="form-control" id="nama" name="nama"
+                                    value="{{ old('nama_lengkap', Auth()->guard('peserta')->user()->nama_lengkap) }}"
+                                    placeholder="" required>
+                                @if ($errors->has('nama'))
+                                <div id="nama-error" class="error text-danger pl-3" for="nama" style="display: block;">
+                                    <strong>{{ $errors->first('nama') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="hidden" class="form-control" id="peserta_id" name="peserta_id"
+                                    value="{{ old('id', Auth()->guard('peserta')->user()->id) }}"
+                                    placeholder="" required>
+                                @if ($errors->has('peserta_id'))
+                                <div id="peserta_id-error" class="error text-danger pl-3" for="peserta_id" style="display: block;">
+                                    <strong>{{ $errors->first('peserta_id') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <label for="">Email Peserta</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ old('email', Auth()->guard('peserta')->user()->email) }}" placeholder=""
+                                    required>
+                                @if ($errors->has('email'))
+                                <div id="email-error" class="error text-danger pl-3" for="email"
                                     style="display: block;">
-                                    <strong>{{ $errors->first('nama_lengkap') }}</strong>
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <label for="">Nomor HP Peserta</label>
+                                <input type="number" class="form-control" id="nomor_hp" name="nomor_hp"
+                                    value="{{ old('nomor_hp', Auth()->guard('peserta')->user()->nomor_hp) }}"
+                                    placeholder="" required>
+                                @if ($errors->has('nomor_hp'))
+                                <div id="nomor_hp-error" class="error text-danger pl-3" for="nomor_hp"
+                                    style="display: block;">
+                                    <strong>{{ $errors->first('nomor_hp') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+
+                            @else
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="name" name="nama" value=""
+                                    placeholder="Nama Lengkap" required>
+                                @if ($errors->has('nama'))
+                                <div id="nama-error" class="error text-danger pl-3" for="nama" style="display: block;">
+                                    <strong>{{ $errors->first('nama') }}</strong>
                                 </div>
                                 @endif
                             </div>
@@ -81,7 +140,7 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" value=""
-                                    placeholder="Nomor Handphone" maxlength="" required>
+                                    placeholder="Nomor Handphone" required>
                                 @if ($errors->has('nomor_hp'))
                                 <div id="nomor_hp-error" class="error text-danger pl-3" for="nomor_hp"
                                     style="display: block;">
@@ -89,30 +148,78 @@
                                 </div>
                                 @endif
                             </div>
+                            @endif
+
                             <div class="col-md-12 form-group p_star">
-                                <input type="password" class="form-control" id="password" name="password" value=""
-                                    placeholder="Password" required>
-                                @if ($errors->has('password'))
-                                <div id="password-error" class="error text-danger pl-3" for="password"
+                                <label for="">Pelatihan</label>
+                                <input type="text" class="form-control" id="" name="" value="{{$buttonCreate->nama}}"
+                                    placeholder="" maxlength="" required readonly>
+
+                                <input type="hidden" class="form-control" id="pelatihan_id" name="pelatihan_id"
+                                    value="{{$buttonCreate->id}}" placeholder="" maxlength="" required readonly>
+                                @if ($errors->has('pelatihan_id'))
+                                <div id="pelatihan_id-error" class="error text-danger pl-3" for="pelatihan_id"
                                     style="display: block;">
-                                    <strong>{{ $errors->first('password') }}</strong>
+                                    <strong>{{ $errors->first('pelatihan_id') }}</strong>
                                 </div>
                                 @endif
                             </div>
+
                             <div class="col-md-12 form-group p_star">
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" value="" placeholder="Konfirmasi Password" required>
+                                <input type="hidden" class="form-control" id="voucher_id" name="voucher_id"
+                                    value="{{$buttonCreate->id}}" placeholder="" maxlength="" required readonly>
+                                @if ($errors->has('voucher_id'))
+                                <div id="voucher_id-error" class="error text-danger pl-3" for="voucher_id"
+                                    style="display: block;">
+                                    <strong>{{ $errors->first('voucher_id') }}</strong>
+                                </div>
+                                @endif
                             </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <label for="">Harga</label>
+                                <input type="text" class="form-control" id="harga" name="harga"
+                                    value="RP {{ number_format($buttonCreate->harga, 2, ',', '.') }}" placeholder=""
+                                    maxlength="" required readonly>
+
+                                @if ($errors->has('harga'))
+                                <div id="harga-error" class="error text-danger pl-3" for="harga"
+                                    style="display: block;">
+                                    <strong>{{ $errors->first('harga') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <label for="">Sertifikat</label>
+                                <input type="text" class="form-control" id="sertifikat" name="sertifikat" value="Ada"
+                                    placeholder="" maxlength="" required readonly>
+
+                                @if ($errors->has('sertifikat'))
+                                <div id="sertifikat-error" class="error text-danger pl-3" for="sertifikat"
+                                    style="display: block;">
+                                    <strong>{{ $errors->first('sertifikat') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+
                             <div class="col-md-12 form-group">
-                                <button type="submit" value="submit" class="btn_3">
-                                    Daftar
+                                @if (auth()->guard('peserta')->check())
+                                <button type="submit" value="submit" class="btn_1">
+                                    Beli Pelatihan
                                 </button>
-                                <a class="lost_pass" href="{{route('login-peserta')}}">Sudah Punya Akun?</a>
+                                @else
+                                <a href="{{route('login-peserta')}}" class="btn_1" type="submit">Silahkan Login Terlebih
+                                    Dahulu</a>
+                                @endif
+                                {{-- <a class="lost_pass" href="{{route('login-peserta')}}">Sudah Punya Akun?</a> --}}
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
+
         </div>
         </div>
     </section>

@@ -31,7 +31,7 @@
                                     <p> RP {{ number_format($details->harga, 2, ',', '.') }}</p>
                                 </div>
                                 <div class="add_to_cart">
-                                    <a href="" class="btn_3">Beli</a>
+                                    <a href="{{route('add-user-trainings', $details->id)}}" class="btn_3">Beli</a>
                                 </div>
                             </div>
                         </div>

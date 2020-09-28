@@ -23,34 +23,42 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <th>NO</th>
-                                <th>Training</th>
+                                <th>Pelatihan</th>
+                                <th>Mulai Pelatihan</th>
+                                <th>Selesai Pelatihan</th>
+                                <th>Kode Voucher</th>
                                 <th>Action</th>
                             </thead>
+                            {{-- <col width=1000> --}}
                             <tbody>
                                 @php
                                 $nomor = 1;
                                 @endphp
-                                {{-- @forelse ($training as $item)
+                                @forelse ($pelatihan as $item)
                                 <tr>
                                     <td>{{$nomor}}</td>
-                                    <td><img src="{{ asset('storage/gambar_pelatihan/' . $item->gambar) }}" alt=""
-                                            style="width: 200px; height: 200px;"></td>
-                                    <td>{{$item->nama}}</td>
-                                    <td>{{$item->trainer}}</td>
-                                    <td>Rp. {{ number_format($item->harga, 2, ',', '.')}}</td>
-                                    <td>{{$item->tipe}}</td>
-                                    <td>{{$item->bahan_materi}}</td>
-                                    <td>{{$item->kode_unik_voucher}}</td>
-                                    <td>{{$item->kategori}}</td>
-                                    <td>{{$item->level}}</td>
-                                    <td>{{$item->alat_training}}</td>
-                                    <td>{{$item->publish}}</td>
-                                    <td><a href="{{route('edit-training', $item->id) }}"
-                                            class="btn btn-warning">Edit</a>
-                                        <form action="{{route('delete-training', $item->id) }}" method="post">
+                                    @foreach ($item->pelatihans as $p)
+                                    <td>{{$p->nama}}</td>
+                                    @endforeach
+                                    <td>{{$item->created_at}}</td>
+                                    <td>-</td>
+                                    @foreach ($item->vouchers as $p)
+                                    <td>{{$p->kode}}</td>
+                                    @endforeach
+                                    <td>
+                                        @if ($item->status == 1)
+                                        <a href="{{route('dashboard-pelatihan', $item->id)}}" class="btn btn-warning">Mulai</a> </td>    
+                                        @elseif ($item->status == 3)
+                                        <a href="#" class="btn btn-warning">Halaman Training</a> </td>
+                                        @else
+                                        <a href="#" class="btn btn-warning">Lanjut</a> </td>
+                                        @endif
+                                        
+                                        <td>
+                                        <form action="#" method="post">
                                             @csrf
                                             @method('post')
-                                            <button class="btn btn-danger" type="submit">Hapus</button>
+                                            <button class="btn btn-danger" type="submit">Beri Review</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -58,8 +66,8 @@
                                 $nomor = $nomor + 1;
                                 @endphp
                                 @empty
-                                <td colspan="11">Belum Ada Data</td>
-                                @endforelse --}}
+                                <td colspan="11">Belum Membeli Pelatihan</td>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

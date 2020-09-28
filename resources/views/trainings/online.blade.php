@@ -58,9 +58,11 @@
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                             <div class="single-popular-items mb-50 text-center"> 
                                 <div class="popular-img">
-                                    <img src="{{ asset('storage/gambar_pelatihan/'. $item->gambar) }}" alt="{{$item->nama}}">
+                                    <img src="{{ asset('storage/gambar_pelatihan/'. $item->gambar) }}" alt="{{$item->nama}}" style="width: 300px; height: 300px;">
                                     <div class="img-cap">
-                                        <span>Tambah</span>
+                                        <a href="{{url('payment/'. $item->id)}}">
+                                            <span>Tambah</span>
+                                        </a>
                                     </div>
                                     <div class="favorit-items">
                                         <span class="flaticon-heart"></span>

@@ -22,30 +22,6 @@ UPDIVISION'])
                                     </p>
                                 </div>
                             </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="icon">
-                                        <i class="nc-icon nc-preferences-circle-rotate"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h4>{{ __('Awesome Performances') }}</h4>
-                                    <p>{{ __('Here you can write a feature description for your dashboard, let the users know what is the value that you give them.') }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="icon">
-                                        <i class="nc-icon nc-planet"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h4>{{ __('Global Support') }}</h4>
-                                    <p>{{ __('Here you can write a feature description for your dashboard, let the users know what is the value that you give them.') }}
-                                    </p>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-4 mr-auto">
                             <form method="POST" action="{{ route('register') }}">
@@ -64,7 +40,7 @@ UPDIVISION'])
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control" required>
+                                            <input type="password" name="password" class="form-control" required placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password_confirmation"

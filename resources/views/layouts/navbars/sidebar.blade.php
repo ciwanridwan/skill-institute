@@ -6,7 +6,7 @@ Tip 2: you can also add an image using data-image tag
 -->
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="#" class="simple-text">
+            <a href="{{url('/')}}" class="simple-text">
                 {{ __("SKILL INSTITUTE") }}
             </a>
         </div>
@@ -47,6 +47,47 @@ Tip 2: you can also add an image using data-image tag
                 </div>
             </li>
 
+            {{-- Kategori dan Level --}}
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#kategori-level" @if($activeButton =='kategori-level') aria-expanded="true" @endif>
+                    <i>
+                        <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
+                    </i>
+                    <p>
+                        {{ __('Kategori Dan Level') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse @if($activeButton =='kategori-level') show @endif" id="kategori-level">
+                    <ul class="nav">
+                        <li class="nav-item @if($activePage == 'create-level') active @endif">
+                            <a class="nav-link" href="{{route('create-level')}}">
+                                <i class="nc-icon nc-circle-09"></i>
+                                <p>{{ __("Tambah Level") }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item @if($activePage == 'table-level') active @endif">
+                            <a class="nav-link" href="{{route('table-level')}}">
+                                <i class="nc-icon nc-single-02"></i>
+                                <p>{{ __("List Level") }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item @if($activePage == 'create-kategori') active @endif">
+                            <a class="nav-link" href="{{route('create-kategori')}}">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>{{ __("Tambah Kategori") }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item @if($activePage == 'table-kategori') active @endif">
+                            <a class="nav-link" href="{{route('table-kategori')}}">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>{{ __("List Kategori") }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
              {{-- Pelatihan --}}
              <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#training" @if($activeButton =='training') aria-expanded="true" @endif>
@@ -72,35 +113,50 @@ Tip 2: you can also add an image using data-image tag
                                 <p>{{ __("Tambah Pelatihan") }}</p>
                             </a>
                         </li>
+            
+                        <li class="nav-item @if($activePage == 'publish-training') active @endif">
+                            <a class="nav-link" href="{{route('publish-training')}}">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>{{ __("Published Training") }}</p>
+                            </a>
+                        </li>
 
-                        <li class="nav-item @if($activePage == 'table-level') active @endif">
-                            <a class="nav-link" href="{{route('table-level')}}">
+                        <li class="nav-item @if($activePage == 'populer-pelatihan') active @endif">
+                            <a class="nav-link" href="{{route('popular-training')}}">
+                                <i class="nc-icon nc-notes"></i>
+                                <p>{{ __("Pelatihan Terpopuler") }}</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+             {{-- Voucher Pelatihan --}}
+             <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#voucher" @if($activeButton =='voucher') aria-expanded="true" @endif>
+                    <i>
+                        <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
+                    </i>
+                    <p>
+                        {{ __('Voucher') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse @if($activeButton =='voucher') show @endif" id="voucher">
+                    <ul class="nav">
+                        <li class="nav-item @if($activePage == 'create-voucher') active @endif">
+                            <a class="nav-link" href="{{route('create-voucher')}}">
                                 <i class="nc-icon nc-single-02"></i>
-                                <p>{{ __("List Level") }}</p>
+                                <p>{{ __("Tambah Voucher") }}</p>
                             </a>
                         </li>
-
-                        <li class="nav-item @if($activePage == 'create-level') active @endif">
-                            <a class="nav-link" href="{{route('create-level')}}">
+                        <li class="nav-item @if($activePage == 'used-voucher') active @endif">
+                            <a class="nav-link" href="{{route('used-voucher')}}">
                                 <i class="nc-icon nc-circle-09"></i>
-                                <p>{{ __("Tambah Level") }}</p>
+                                <p>{{ __("Voucher Terpakai") }}</p>
                             </a>
                         </li>
-
-                        <li class="nav-item @if($activePage == 'create-kategori') active @endif">
-                            <a class="nav-link" href="{{route('create-kategori')}}">
-                                <i class="nc-icon nc-notes"></i>
-                                <p>{{ __("Tambah Kategori") }}</p>
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item @if($activePage == 'table-kategori') active @endif">
-                            <a class="nav-link" href="{{route('table-kategori')}}">
-                                <i class="nc-icon nc-notes"></i>
-                                <p>{{ __("List Kategori") }}</p>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </li>
@@ -128,6 +184,13 @@ Tip 2: you can also add an image using data-image tag
                             <a class="nav-link" href="{{route('create-webinar')}}">
                                 <i class="nc-icon nc-circle-09"></i>
                                 <p>{{ __("Tambah Webinar") }}</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item @if($activePage == 'publish-webinar') active @endif">
+                            <a class="nav-link" href="{{route('publish-index-webinar')}}">
+                                <i class="nc-icon nc-circle-09"></i>
+                                <p>{{ __("Publish Webinar") }}</p>
                             </a>
                         </li>
                     </ul>

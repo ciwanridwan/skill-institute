@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Kategori;
 use App\LevelTraining;
+use App\Materi;
 use App\Pelatihan;
+use App\Pembayaran;
+use App\Popular;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +15,27 @@ use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
+    public function sidebar($id)
+    {
+        $mulai = Pembayaran::find($id);
+        $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
+        return view('layouts.trainings.navbars.sidebar')->with('mulai', $mulai)->with('pelatihan', $pelatihan);
+    }
+    public function startTraining($id)
+    {
+        $mulai = Pembayaran::find($id);
+        $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
+        $looping = Materi::where('pelatihan_id', $mulai->pelatihan_id)->count();
+        // dd($looping);
+        for ($i=0; $i < $looping ; $i++) { 
+            return view('peserta.trainings.continues.dashboard')->with('mulai', $mulai)->with('pelatihan', $pelatihan);
+        }
+    }
+    public function popular(Request $request)
+    {
+        $popular = Popular::all();
+        return view('admin.trainings.popular')->with('popular', $popular);
+    }
     public function historyTraining()
     {
         return view('peserta.trainings.history');
@@ -19,7 +43,8 @@ class TrainingController extends Controller
 
     public function pesertaTraining()
     {
-        return view('peserta.trainings.index');
+        $pelatihan = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->get();
+        return view('peserta.trainings.index')->with('pelatihan', $pelatihan);
     }
 
     public function trainingOnline()
@@ -53,7 +78,10 @@ class TrainingController extends Controller
     public function index()
     {
         $training = Pelatihan::all();
-        return view('trainings.index')->with('training', $training);
+        // return view('trainings.index')->with('training', $training);
+        $popular = Popular::all();
+        return view('trainings.index', compact('training', 'popular'));
+
     }
 
     /**
@@ -210,6 +238,7 @@ class TrainingController extends Controller
     {
         $training = Pelatihan::find($id);
         $training->delete();
+        $training->pembayarans()->delete('id', $training->id);
 
         Session::put('success', 'Berhasil Dihapus');
         return redirect()->back();

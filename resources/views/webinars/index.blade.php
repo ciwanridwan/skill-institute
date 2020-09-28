@@ -26,7 +26,7 @@
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Pelatihan Baru</a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Pelatihan ter populer</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Pelatihan gratis </a>
+                            {{-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Pelatihan gratis </a> --}}
                         </div>
                     </nav>
                     <!--End Nav Button  -->
@@ -57,9 +57,11 @@
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                             <div class="single-popular-items mb-50 text-center"> 
                                 <div class="popular-img">
-                                    <img src="{{ asset('storage/gambar/'. $item->gambar) }}" alt="{{$item->judul}}">
+                                    <img src="{{ asset('storage/gambar/'. $item->gambar) }}" alt="{{$item->judul}}" height="350" width="300">
                                     <div class="img-cap">
-                                        <span>Tambah</span>
+                                        <a href="{{url('webinar/payment/'. $item->id)}}">
+                                            <span>Tambah</span>
+                                        </a>
                                     </div>
                                     <div class="favorit-items">
                                         <span class="flaticon-heart"></span>

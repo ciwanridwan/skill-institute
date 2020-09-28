@@ -1,11 +1,11 @@
-@extends('layouts.app', ['activePage' => 'training', 'title' => 'Pelatihan', 'navName' => 'Data Pelatihan',
+@extends('layouts.app', ['activePage' => 'popular-pelatihan', 'title' => 'Pelatihan Terpopuler', 'navName' => 'Pelatihan Yang Populer',
 'activeButton' => 'training'])
 
 @section('content')
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-14">
+            <div class="col-md-12">
                 <div class="card strpied-tabled-with-hover">
                     <div class="card-header ">
                         @if (Session::has('success'))
@@ -17,47 +17,32 @@
                         </div>
                         {{Session::put('success', null)}}
                         @endif
-                        <h4 class="card-title">Data Pelatihan</h4>
+                        <h4 class="card-title">Pelatihan Terpopuler</h4>
+                        <a href="{{route('create-popular')}}"
+                            class="btn btn-warning">Tambah</a>
                     </div>
                     <div class="card-body table-full-width table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
-                                <th>ID</th>
-                                <th>Gambar</th>
-                                <th>Nama</th>
-                                <th>Trainer</th>
-                                <th>Harga</th>
-                                <th>Tipe</th>
-                                <th>Bahan Materi</th>
-                                <th>Kode Unik Voucher</th>
-                                <th>Kategori</th>
-                                <th>Level</th>
-                                <th>Alat Training</th>
-                                <th>Publish</th>
+                                <th>No.</th>
+                                <th>Urutan</th>
+                                <th>Judul Pelatihan</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
                                 @php
                                 $nomor = 1;
                                 @endphp
-                                @forelse ($training as $item)
+                                @forelse ($popular as $item)
                                 <tr>
                                     <td>{{$nomor}}</td>
-                                    <td><img src="{{ asset('storage/gambar_pelatihan/' . $item->gambar) }}" alt=""
-                                            style="width: 200px; height: 200px;"></td>
-                                    <td>{{$item->nama}}</td>
-                                    <td>{{$item->trainer}}</td>
-                                    <td>Rp. {{ number_format($item->harga, 2, ',', '.')}}</td>
-                                    <td>{{$item->tipe}}</td>
-                                    <td>{{$item->bahan_materi}}</td>
-                                    <td>{{$item->kode_unik_voucher}}</td>
-                                    <td>{{$item->kategori}}</td>
-                                    <td>{{$item->level}}</td>
-                                    <td>{{$item->alat_training}}</td>
-                                    <td>{{$item->publish}}</td>
-                                    <td><a href="{{route('edit-training', $item->id) }}"
+                                    <td>{{$item->urutan}}</td>
+                                    @foreach ($item->pelatihans as $p)
+                                    <td>{{$p->nama}} </td>    
+                                    @endforeach
+                                    <td><a href="{{route('edit-populer', $item->id) }}"
                                             class="btn btn-warning">Edit</a>
-                                        <form action="{{route('delete-training', $item->id) }}" method="post">
+                                        <form action="{{route('delete-populer', $item->id) }}" method="post">
                                             @csrf
                                             @method('post')
                                             <button class="btn btn-danger" type="submit">Hapus</button>

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Chart;
+use App\Peserta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class ChartController extends Controller
 {
+    public function chartPeserta()
+    {
+        $result = Peserta::all();
+        return response()->json($result);
+    }
     public function displayChart()
     {
         $result = Chart::where('name', '=', 'Laptop')->orderBy('year', 'ASC')->get();

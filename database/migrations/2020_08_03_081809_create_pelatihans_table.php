@@ -14,7 +14,7 @@ class CreatePelatihansTable extends Migration
     public function up()
     {
         Schema::create('pelatihans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nama');
             $table->integer('harga');
             $table->string('tipe');

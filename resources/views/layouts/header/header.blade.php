@@ -13,7 +13,7 @@
                     <div class="main-menu d-none d-lg-block">
                         <nav>
                             <ul id="navigation">
-                                <li><a href="#">Home</a></li>
+                                <li><a href="{{url('/')}}">Home</a></li>
                                 <li class="hot"><a href="{{route('trainings-index')}}">Pelatihan</a>
                                     <ul class="submenu">
                                         <li><a href="{{route('training-online')}}">Pelatihan online</a></li>
@@ -34,7 +34,17 @@
                                     <span class="flaticon-search"></span>
                                 </div>
                             </li>
+                            @if (auth()->guard('peserta')->check())
+                            <li><a href="{{ route('dashboard-peserta') }}" style="color: red">Dashboard</a></li>
+                            <form id="logout-form" action="{{route('logout-peserta')}}" method="POST">
+                                @csrf
+                                <a class="text-danger" href="{{route('logout-peserta')}}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Log out </a>
+                            </form>
+                            @else
                             <li> <a href="{{route('login-peserta')}}"><span class="flaticon-user"></span></a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>

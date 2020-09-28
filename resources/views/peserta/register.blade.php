@@ -13,7 +13,7 @@
                         <div class="login_part_text_iner">
                             <h2>Yuk Lanjut Ke Pembelajaran ?</h2>
                             <p>Yuk tambah pengalaman dan skill anda bersama kami di Skill Institute</p>
-                            <a href="#" class="btn_3">Buat Akun Baru</a>
+                            <a href="{{route('login-peserta')}}" class="btn_3">Sudah Punya Akun ?</a>
                         </div>
                     </div>
                 </div>

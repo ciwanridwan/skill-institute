@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'edit-peserta', 'title' => 'Edit Profile', 'navName' => 'Admin Profile', 'activeButton' => 'peserta'])
+@extends('layouts.app', ['activePage' => '', 'title' => 'Edit Profile', 'navName' => 'Admin Profile', 'activeButton' => ''])
 
 @section('content')
     <div class="content">

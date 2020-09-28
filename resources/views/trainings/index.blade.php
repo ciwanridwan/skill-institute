@@ -59,10 +59,11 @@
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                             <div class="single-popular-items mb-50 text-center">
                                 <div class="popular-img">
+                                    {{-- @foreach ($training as $item) --}}
                                     <img src="{{ asset('storage/gambar_pelatihan/'. $item->gambar) }}"
                                         alt="{{$item->nama}}" height="350" width="300">
                                     <div class="img-cap">
-                                        <a href="{{url('add-training/'. $item->id)}}">
+                                        <a href="{{url('payment/'. $item->id)}}">
                                             <span>Tambah</span>
                                         </a>
                                     </div>
@@ -81,24 +82,29 @@
                         <!-- Card two -->
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                             <div class="row">
+                                @foreach ($popular as $item)
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                     <div class="single-popular-items mb-50 text-center">
+                                        @foreach ($item->pelatihans as $show)
                                         <div class="popular-img">
-                                            <img src="assets/img/gallery/product1.jpeg" alt="">
-                                            <div class="img-cap">
+                                            <img src="{{ asset('storage/gambar_pelatihan/'. $show->gambar) }}"
+                                                alt="{{$show->gambar}}" height="350" width="300">
+                                            <a href="{{url('payment/'. $show->id)}}">
                                                 <span>Tambah</span>
-                                            </div>
+                                            </a>
                                             <div class="favorit-items">
                                                 <span class="flaticon-heart"></span>
                                             </div>
                                         </div>
                                         <div class="popular-caption">
-                                            <h3><a href="product_details.html">Pelatihan Bahasa Mandarin</a></h3>
-                                            <span>Rp. 500.000</span>
+                                            <h3><a href="{{route('training-details', $show->id) }}">{{$show->nama}}</a>
+                                            </h3>
+                                            <span>RP {{ number_format($show->harga, 2, ',', '.') }}</span>
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
-
+                                @endforeach
                             </div>
                         </div>
                         <!-- Card three -->
@@ -123,10 +129,12 @@
                         </div>
                        
                     </div>
-                </div>
-            </div> --}}
-                        <!-- End Nav Card -->
+                </div> --}}
                     </div>
+                </div>
+            </div>
+            <!-- End Nav Card -->
+        </div>
     </section>
     <!-- Latest Products End -->
 </main>

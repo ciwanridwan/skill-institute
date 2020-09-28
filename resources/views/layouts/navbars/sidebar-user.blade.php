@@ -6,8 +6,8 @@
  -->
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="#" class="simple-text">
-                Creative Tim
+            <a href="{{url('/')}}" class="simple-text">
+                SKILL INSTITUTE
             </a>
         </div>
         <ul class="nav">
