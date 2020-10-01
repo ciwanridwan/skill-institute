@@ -64,8 +64,11 @@ Route::group(['middleware' => 'peserta'], function () {
 		Route::patch('/update', 'PesertaController@update')->name('update-peserta');
 		Route::patch('/update-password', 'PesertaController@updatePassword')->name('update-password');
 		Route::post('/logout', 'PesertaController@logoutUser')->name('logout-peserta');
-		Route::get('/pelatihan/materi/{id}', 'TrainingController@startTraining')->name('dashboard-pelatihan');
-		Route::get('pelatihan/sidebar/{id}', 'TrainingController@sidebar')->name('sidebar-pelatihan');
+		Route::group(['prefix' => 'pelatihan'], function (){
+			Route::get('materi/{id}', 'TrainingController@startTraining')->name('dashboard-pelatihan');
+			Route::get('sidebar/{id}', 'TrainingController@sidebar')->name('sidebar-pelatihan');	
+		});
+		
 	});
 });
 

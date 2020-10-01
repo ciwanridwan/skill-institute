@@ -34,8 +34,8 @@
                     <ul class="nav">
                         @foreach ($pelatihan as $item)
                         @foreach ($item->materis as $p)
-                        <li class="nav-item @if($activePage == 'training') active @endif">
-                            <a class="nav-link" href="{{route('user-training')}}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('dashboard-pelatihan', $p->id)}}">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>{{$p->judul}}</p>
                             </a>

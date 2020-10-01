@@ -35,6 +35,7 @@
                         </div>
                         <hr>
                         <a href="" class="btn btn-primary" style="text-align: center">Lanjut Ke Quiz</a>
+                        {{$looping->links()}}
                         @endforeach
                         @endforeach
                         {{-- <a href="" class="btn btn-primary" style="text-align: center">Lanjut Ke Quiz</a> --}}

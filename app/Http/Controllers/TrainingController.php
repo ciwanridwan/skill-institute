@@ -19,17 +19,22 @@ class TrainingController extends Controller
     {
         $mulai = Pembayaran::find($id);
         $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
+        $menu = $pelatihan->count();
+        // dd($menu);
+        // for ($i=0; $i < $menu ; $i++) { 
+        //     # code...
+        // }
         return view('layouts.trainings.navbars.sidebar')->with('mulai', $mulai)->with('pelatihan', $pelatihan);
     }
     public function startTraining($id)
     {
         $mulai = Pembayaran::find($id);
         $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
-        $looping = Materi::where('pelatihan_id', $mulai->pelatihan_id)->count();
-        // dd($looping);
-        for ($i=0; $i < $looping ; $i++) { 
-            return view('peserta.trainings.continues.dashboard')->with('mulai', $mulai)->with('pelatihan', $pelatihan);
-        }
+        $looping = Materi::where('pelatihan_id', $mulai->pelatihan_id)->paginate(1);
+        // $looping->setPath('/custom/url');
+
+        return view('peserta.trainings.continues.dashboard')
+        ->with('mulai', $mulai)->with('pelatihan', $pelatihan)->with('looping', $looping);
     }
     public function popular(Request $request)
     {
@@ -81,7 +86,6 @@ class TrainingController extends Controller
         // return view('trainings.index')->with('training', $training);
         $popular = Popular::all();
         return view('trainings.index', compact('training', 'popular'));
-
     }
 
     /**
