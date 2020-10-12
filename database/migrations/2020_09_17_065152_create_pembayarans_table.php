@@ -19,7 +19,8 @@ class CreatePembayaransTable extends Migration
             $table->string('email');
             $table->string('nomor_hp');
             $table->foreignId('peserta_id');
-            $table->foreignId('pelatihan_id');
+            $table->foreignId('pelatihan_id')->nullable();
+            $table->foreignId('webinar_id')->nullable();
             $table->timestamps();
         });
     }

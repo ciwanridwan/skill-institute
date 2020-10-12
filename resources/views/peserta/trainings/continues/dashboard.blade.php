@@ -18,25 +18,31 @@
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header ">
-                        <h4 class="card-title">{{ __('Video Pertama') }}</h4>
+                        <h4 class="card-title">{{ __('Informasi Pelatihan') }}</h4>
                         {{-- <p class="card-category">{{ __('Pantauan 24 Jam') }}</p> --}}
                     </div>
                     <div class="card-body">
-                        {{-- <div id="chartHours" class="ct-chart"></div> --}}
+                        
                         @foreach ($pelatihan as $item)
-                        @foreach ($item->materis as $p)
-                        <video width="400" controls>
+                        <img src="{{asset('storage/gambar_pelatihan/'. $item->gambar)}}" alt="{{$item->nama}}" width="600px" height="400px">
+                        {{-- <video width="400" controls>
                             <source src="{{$p->url_video}}" type="video/mp4">
-                        </video>
+                        </video> --}}
+                        <h4>Deskripsi : {{$item->deskripsi}}</h4>
+                        <h4>Trainer : {{$item->trainer}}</h4>
+                        <h4>Kategori : {{$item->kategori}}</h4>
+                        <h4>Level Training : {{$item->level}}</h4>
+                        <h4>Alat Yang Dibutuhkan : {{$item->alat_training}}</h4>
+                        <h4>Bahan Materi : {{$item->bahan_materi}}</h4>
+                        <h4>Pengalaman Kerja Peserta : {{$item->pengalaman_kerja_peserta}}</h4>
+                        <h4>Kemampuan Dasar Peserta : {{$item->kemampuan_dasar_peserta}}</h4>
+                        <h4>Bahan Materi : {{$item->bahan_materi}}</h4>
                     </div>
                     <div class="card-footer ">
                         <div class="legend">
-                            <h4>Deskripsi : {{$p->deskripsi}}</h4>
+                            
                         </div>
-                        <hr>
-                        <a href="" class="btn btn-primary" style="text-align: center">Lanjut Ke Quiz</a>
-                        {{$looping->links()}}
-                        @endforeach
+                        <hr>                        
                         @endforeach
                         {{-- <a href="" class="btn btn-primary" style="text-align: center">Lanjut Ke Quiz</a> --}}
                     </div>

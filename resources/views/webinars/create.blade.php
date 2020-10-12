@@ -48,7 +48,7 @@
                             {{-- RESPON SUKSES --}}
                             @if (Session::has('message'))
                             <p class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{Session::get('success')}}
+                                {{Session::get('message')}}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -67,7 +67,7 @@
                         </div><br />
                         @endif --}}
 
-                        <form class="row contact_form" action="{{route('payment-webinar', $toForm->id)}}" method="POST"
+                        <form class="row contact_form" action="{{route('store-payment-webinar', $toForm->id)}}" method="POST"
                             novalidate="novalidate">
                             @csrf
                             @method('POST')
@@ -155,12 +155,12 @@
                                 <input type="text" class="form-control" id="" name="" value="{{$toForm->judul}}"
                                     placeholder="" maxlength="" required readonly>
 
-                                <input type="hidden" class="form-control" id="pelatihan_id" name="pelatihan_id"
+                                <input type="hidden" class="form-control" id="webinar_id" name="webinar_id"
                                     value="{{$toForm->id}}" placeholder="" maxlength="" required readonly>
-                                @if ($errors->has('pelatihan_id'))
-                                <div id="pelatihan_id-error" class="error text-danger pl-3" for="pelatihan_id"
+                                @if ($errors->has('webinar_id'))
+                                <div id="webinar_id-error" class="error text-danger pl-3" for="webinar_id"
                                     style="display: block;">
-                                    <strong>{{ $errors->first('pelatihan_id') }}</strong>
+                                    <strong>{{ $errors->first('webinar_id') }}</strong>
                                 </div>
                                 @endif
                             </div>
@@ -180,23 +180,10 @@
                                 @endif
                             </div>
 
-                            {{-- <div class="col-md-12 form-group p_star">
-                                <label for="">Sertifikat</label>
-                                <input type="text" class="form-control" id="sertifikat" name="sertifikat" value="Ada"
-                                    placeholder="" maxlength="" required readonly>
-
-                                @if ($errors->has('sertifikat'))
-                                <div id="sertifikat-error" class="error text-danger pl-3" for="sertifikat"
-                                    style="display: block;">
-                                    <strong>{{ $errors->first('sertifikat') }}</strong>
-                                </div>
-                                @endif
-                            </div> --}}
-
                             <div class="col-md-12 form-group">
                                 @if (auth()->guard('peserta')->check())
                                 <button type="submit" value="submit" class="btn_1">
-                                    Join
+                                    Registrasi
                                 </button>
                                 @else
                                 <a href="{{route('login-peserta')}}" class="btn_1" type="submit">Silahkan Login Terlebih

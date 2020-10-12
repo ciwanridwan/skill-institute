@@ -34,6 +34,7 @@
      <link href="{{ asset('light-bootstrap/css/demo.css') }}" rel="stylesheet" />
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      @yield('css-video')
+     @yield('style-modal')
  </head>
  
  <body>
@@ -139,4 +140,5 @@
         });
  </script>
  
+ @yield('modal-js')
  </html>

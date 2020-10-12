@@ -26,7 +26,7 @@ class PaymentController extends Controller
             'email' => 'required|string|exists:pesertas,email',
             'nomor_hp' => 'required|exists:pesertas,nomor_hp',
             'peserta_id' => 'required|exists:pesertas,id',
-            'pelatihan_id' => 'required|exists:pelatihans,id',
+            'webinar_id' => 'required|exists:webinars,id',
         ]);
 
         $payment = new Pembayaran();
@@ -34,15 +34,17 @@ class PaymentController extends Controller
         $payment->email = $request->email;
         $payment->nomor_hp = $request->nomor_hp;
         $payment->peserta_id = $request->peserta_id;
-        $payment->pelatihan_id = $request->pelatihan_id;
+        $payment->pelatihan_id = 0;
+        $payment->voucher_id = 0;
+        $payment->webinar_id = $request->webinar_id;
         $payment->status = 1;
         // dd($payment->pelatihan_id);
         $payment->save();
-        $pelatihan = Pelatihan::find($request->pelatihan_id);
-        $payment->pelatihans()->attach($pelatihan);
+        $webinar = Webinar::find($request->webinar_id);
+        $payment->webinars()->attach($webinar);
 
         Session::put('message', 
-        'Selamat, Pembelian Pelatihan Berhasil, Silahkan Lanjut Buka Dashboard Anda Untuk Melanjutkan Pelatihan');
+        'Selamat, Berhasil Registrasi, Silahkan Lanjut Buka Dashboard Anda Untuk Melanjutkan Webinar');
         return redirect()->back();   
     }
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pembayaran;
 use App\Webinar;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
@@ -11,11 +12,24 @@ use Illuminate\Support\Facades\Storage;
 
 class WebinarController extends Controller
 {
+    public function updateStatusWebinar()
+    {
+        $update = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->update(['status' => 2]);
+        return redirect()->back();
+    }
+
+    public function startWebinar($judul)
+    {
+        $play = Webinar::where('judul', $judul)->get();
+        return view('peserta.webinars.continues.index')->with('play', $play);
+    }
+
     public function indexPublish()
     {
         $publish = Webinar::all();
         return view('admin.webinars.publish')->with('publish', $publish);
     }
+
     public function publishWebinar($id)
     {
         $publish = Webinar::find($id);
@@ -36,8 +50,17 @@ class WebinarController extends Controller
 
     public function pesertaWebinar()
     {
-        return view('peserta.webinars.index');
+        $webinar = Webinar::all();
+        foreach ($webinar as $key) {
+            $peserta = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->where('webinar_id', $key->id)->get();
+            foreach ($peserta as $web) {
+                
+            }
+            $binar = Webinar::where('id', $web->webinar_id)->get();
+            return view('peserta.webinars.index')->with('peserta', $peserta)->with('binar', $binar)->with('web', $web);
+        }
     }
+
     public function details($id)
     {
         $details = Webinar::find($id);

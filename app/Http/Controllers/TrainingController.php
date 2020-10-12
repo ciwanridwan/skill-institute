@@ -8,33 +8,47 @@ use App\Materi;
 use App\Pelatihan;
 use App\Pembayaran;
 use App\Popular;
+use App\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
+    public function materi($pelatihan_id, $judul)
+    {
+        $mulai = Pembayaran::where('pelatihan_id', $pelatihan_id)->get();
+        $pelatihan = Pelatihan::where('id', $pelatihan_id)->get();
+        $materi = Materi::where('pelatihan_id', $pelatihan_id)->paginate(1);
+        // dd($materi);
+        foreach ($materi as $key) {
+            $quiz = Quiz::where('materi_id', $key->id)->get();
+            // dd($materi); 
+            return view('peserta.trainings.continues.materi')->with('pelatihan', $pelatihan)->with('materi', $materi)->with('mulai', $mulai)->with('quiz', $quiz);
+        }
+    }
+
     public function sidebar($id)
     {
         $mulai = Pembayaran::find($id);
         $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
-        $menu = $pelatihan->count();
-        // dd($menu);
-        // for ($i=0; $i < $menu ; $i++) { 
-        //     # code...
-        // }
-        return view('layouts.trainings.navbars.sidebar')->with('mulai', $mulai)->with('pelatihan', $pelatihan);
+        $materi = Materi::where('pelatihan_id', $mulai->pelatihan_id)->paginate(1);
+        // dd($materi);   
+        return view('layouts.trainings.navbars.sidebar')->with('mulai', $mulai)->with('pelatihan', $pelatihan)->with('materi', $materi);
     }
+
     public function startTraining($id)
     {
+        // $id = Crypt::encrypt($id);
         $mulai = Pembayaran::find($id);
         $pelatihan = Pelatihan::where('id',  $mulai->pelatihan_id)->get();
         $looping = Materi::where('pelatihan_id', $mulai->pelatihan_id)->paginate(1);
         // $looping->setPath('/custom/url');
 
         return view('peserta.trainings.continues.dashboard')
-        ->with('mulai', $mulai)->with('pelatihan', $pelatihan)->with('looping', $looping);
+            ->with('mulai', $mulai)->with('pelatihan', $pelatihan)->with('looping', $looping);
     }
     public function popular(Request $request)
     {
@@ -48,8 +62,18 @@ class TrainingController extends Controller
 
     public function pesertaTraining()
     {
-        $pelatihan = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->get();
-        return view('peserta.trainings.index')->with('pelatihan', $pelatihan);
+        $pel = Pelatihan::all();
+        foreach ($pel as $key) {
+            $pelatihan = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->where('pelatihan_id', $key->id)->get();
+            // dd($pelatihan);
+            return view('peserta.trainings.index')->with('pelatihan', $pelatihan);
+        }
+    }
+
+    public function updateStatusPelatihan()
+    {
+        $update = Pembayaran::where('peserta_id', auth()->guard('peserta')->user()->id)->update(['status' => 2]);
+        return redirect()->back();
     }
 
     public function trainingOnline()

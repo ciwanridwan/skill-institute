@@ -47,14 +47,19 @@
                                     @endforeach
                                     <td>
                                         @if ($item->status == 1)
-                                        <a href="{{route('dashboard-pelatihan', $item->id)}}" class="btn btn-warning">Mulai</a> </td>    
-                                        @elseif ($item->status == 3)
-                                        <a href="#" class="btn btn-warning">Halaman Training</a> </td>
-                                        @else
-                                        <a href="#" class="btn btn-warning">Lanjut</a> </td>
-                                        @endif
-                                        
-                                        <td>
+                                        <form action="{{route('update-status')}}" method="POST">
+                                            @csrf
+                                            @method('POST')
+                                            <button class="btn btn-warning" type="submit">Mulai</button>
+                                        </form>
+                                    </td>
+                                    @elseif ($item->status == 3)
+                                    <a href="#" class="btn btn-warning">Halaman Training</a> </td>
+                                    @else
+                                    <a href="{{route('dashboard-pelatihan', $item->id)}}" class="btn btn-warning">Lanjut</a> </td>
+                                    @endif
+
+                                    <td>
                                         <form action="#" method="post">
                                             @csrf
                                             @method('post')

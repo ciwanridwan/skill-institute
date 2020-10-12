@@ -11,4 +11,9 @@ class Webinar extends Model
     protected $fillable = [
         'judul', 'harga', 'tipe', 'trainer', 'deskripsi', 'alat_webinar', 'publish', 'jadwal', 'link', 'kuota_pendaftaran', 'gambar'
     ];
+
+    public function payments()
+    {
+        return $this->belongsToMany(Pembayaran::class);
+    }
 }

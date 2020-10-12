@@ -10,4 +10,9 @@ class Materi extends Model
     {
         return $this->belongsTo(Pelatihan::class);
     }
+
+    public function quiz()
+    {
+        return $this->hasMany(Quiz::class);
+    }
 }

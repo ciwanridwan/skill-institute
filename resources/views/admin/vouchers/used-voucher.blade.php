@@ -38,7 +38,7 @@
                             <thead>
                                 <th>No.</th>
                                 <th>Nama Pelatihan</th>
-                                <th>Kode Unik Voucher</th>
+                                <th>Kode Voucher</th>
                                 <th>Jumlah Voucher Tersedia</th>
                                 <th>Action</th>
                             </thead>

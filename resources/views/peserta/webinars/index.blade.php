@@ -25,45 +25,37 @@
                                 <th>NO</th>
                                 <th>Webinar</th>
                                 <th>Tanggal Pelaksanaan</th>
-                                <th>Start Webinar</th>
-                                <th>Selesai Webinar</th>
-                                <th>Kode Voucher Webinar</th>                                
+                                <th>Link</th>    
                                 <th>Action</th>
                             </thead>
                             <tbody>
                                 @php
                                 $nomor = 1;
                                 @endphp
-                                {{-- @forelse ($training as $item)
+                                @forelse ($binar as $item)
                                 <tr>
                                     <td>{{$nomor}}</td>
-                                    <td><img src="{{ asset('storage/gambar_pelatihan/' . $item->gambar) }}" alt=""
-                                            style="width: 200px; height: 200px;"></td>
-                                    <td>{{$item->nama}}</td>
-                                    <td>{{$item->trainer}}</td>
-                                    <td>Rp. {{ number_format($item->harga, 2, ',', '.')}}</td>
-                                    <td>{{$item->tipe}}</td>
-                                    <td>{{$item->bahan_materi}}</td>
-                                    <td>{{$item->kode_unik_voucher}}</td>
-                                    <td>{{$item->kategori}}</td>
-                                    <td>{{$item->level}}</td>
-                                    <td>{{$item->alat_training}}</td>
-                                    <td>{{$item->publish}}</td>
-                                    <td><a href="{{route('edit-training', $item->id) }}"
-                                            class="btn btn-warning">Edit</a>
-                                        <form action="{{route('delete-training', $item->id) }}" method="post">
+                                    
+                                    <td>{{$item->judul}}</td>
+                                    <td>{{$item->jadwal}}</td>
+                                    <td>{{$item->link}}</td>
+                                    @if ($web->status == 1)
+                                        <td><form action="{{route('update-status-webinar')}}" method="POST">
                                             @csrf
-                                            @method('post')
-                                            <button class="btn btn-danger" type="submit">Hapus</button>
-                                        </form>
-                                    </td>
+                                            @method('POST')
+                                            <button class="btn btn-warning" type="submit">Mulai</button>
+                                        </form></td>
+                                        @else 
+                                        <td>
+                                        <a target="_blank" href="{{route('start-webinar', $item->judul)}}" class="btn btn-warning">Lanjut</a> </td>
+                                    @endif
                                 </tr>
                                 @php
                                 $nomor = $nomor + 1;
                                 @endphp
                                 @empty
                                 <td colspan="11">Belum Ada Data</td>
-                                @endforelse --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

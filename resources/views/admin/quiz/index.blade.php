@@ -1,5 +1,5 @@
-@extends('layouts.app', ['activePage' => 'table-quiz', 'title' => 'Materi Pelatihan', 'navName' => 'Materi
-Pelatihan', 'activeButton' => 'training'])
+@extends('layouts.app', ['activePage' => 'table-soal', 'title' => 'Quiz Materi', 'navName' => 'Soal/Quiz
+Materi', 'activeButton' => 'training'])
 
 @section('content')
 <div class="content">
@@ -17,46 +17,44 @@ Pelatihan', 'activeButton' => 'training'])
                         </div>
                         {{Session::put('success', null)}}
                         @endif
-                        <h4 class="card-title">Materi</h4>
-                        <a href="{{route('create-quiz', $pelatihan->id)}}" class="btn btn-warning">Tambah</a>
+                        <h4 class="card-title">Quiz</h4>
+                        <a href="{{route('create-soal', $key->judul)}}" class="btn btn-warning">Tambah</a>
                     </div>
                     <div class="card-body table-full-width table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <th>No</th>
-                                <th>Judul</th>
-                                <th>Url Video</th>
-                                <th>Deskripsi</th>
-                                <th>Durasi</th>
-                                <th>File</th>
+                                <th>Soal</th>
+                                <th>Pilihan A</th>
+                                <th>Pilihan B</th>
+                                <th>Pilihan C</th>
+                                <th>Pilihan D</th>
+                                <th>Jawaban</th>
                                 <th colspan="3">Action</th>
                             </thead>
                             <tbody>
                                 @php
                                 $nomor = 1;
                                 @endphp
-                                @forelse ($materi as $item)
+                                @forelse ($soal as $item)
                                 <tr>
                                     <td>{{$nomor}}</td>                    
-                                    <td>{{$item->judul}}</td>
-                                    <td>{{$item->url_video}}</td>
-                                    <td>{{$item->deskripsi}}</td>
-                                    <td>{{$item->durasi}}</td>
-                                    @if ($item->file == 'nofile.txt')
-                                        <td>Tidak Ada</td>
-                                    @else
-                                    <td>{{$item->file}}</td>    
-                                    @endif
-                                    <td><a href="{{route('edit-quiz', $item->id)}}" class="btn btn-warning">Edit</a>
-                                        <form action="{{route('delete-quiz', $item->id)}}" method="post">
+                                    <td>{{$item->soal}}</td>
+                                    <td>{{$item->pilihan1}}</td>
+                                    <td>{{$item->pilihan2}}</td>
+                                    <td>{{$item->pilihan3}}</td>
+                                    <td>{{$item->pilihan4}}</td>
+                                    <td>{{$item->jawaban}}</td>
+                                    <td><a href="{{route('edit-soal', $item->id)}}" class="btn btn-warning">Edit</a>
+                                        <form action="{{route('delete-soal', $item->id)}}" method="post">
                                             @csrf
                                             @method('post')
                                             <button class="btn btn-danger" type="submit">Hapus</button>
                                         </form>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                     <a href="{{route('index-soal', $item->judul)}}" class="btn btn-primary">Quiz</a>
-                                </td>
+                                </td> --}}
                                 </tr>
                                 @php
                                 $nomor = $nomor + 1;

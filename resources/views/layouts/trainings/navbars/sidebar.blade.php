@@ -12,7 +12,7 @@
         </div>
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>Dashboard Trainings</p>
                 </a>
@@ -35,7 +35,8 @@
                         @foreach ($pelatihan as $item)
                         @foreach ($item->materis as $p)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('dashboard-pelatihan', $p->id)}}">
+                            <a class="nav-link" href="{{url('user/pelatihan/materi/'.$p->pelatihan_id.'/'.$p->judul)}}">
+                                {{-- <a href="{{$materi->links()}}" class="nav-link"> --}}
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>{{$p->judul}}</p>
                             </a>

@@ -20,4 +20,9 @@ class Pembayaran extends Model
     {
         return $this->belongsToMany(Voucher::class);
     }
+
+    public function webinars()
+    {
+        return $this->belongsToMany(Webinar::class);
+    }
 }

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function (){
-	return view('peserta.trainings.continues.dashboard');
+	return view('layouts.trainings.navbars.sidebar');
 });
 // Add Training
 Route::get('/payment/{id}', 'AddUserTrainingController@create')->name('add-user-trainings');
@@ -45,6 +45,7 @@ route::post('/store-login', 'PesertaController@storeLogin')->name('store-login')
 route::get('/webinar', 'WebinarController@index')->name('webinar');
 route::get('/webinar/details/{id}', 'WebinarController@details')->name('details-webinar');
 route::get('/webinar/payment/{id}', 'PaymentController@paymentWebinar')->name('payment-webinar');
+route::post('/webinar/payment/{id}', 'PaymentController@storePaymentWebinar')->name('store-payment-webinar');
 
 // TRAINING
 route::get('/training', 'TrainingController@index')->name('trainings');
@@ -60,13 +61,18 @@ Route::group(['middleware' => 'peserta'], function () {
 		Route::get('/pelatihan', 'TrainingController@pesertaTraining')->name('user-training');
 		Route::get('/pelatihan/history', 'TrainingController@historyTraining')->name('history-training');
 		Route::get('/webinar', 'WebinarController@pesertaWebinar')->name('user-webinar');
+		Route::post('/webinar/update/status', 'WebinarController@updateStatusWebinar')->name('update-status-webinar');
+		Route::get('/webinar/{judul}', 'WebinarController@startWebinar')->name('start-webinar');
 		Route::get('/dashboard', 'PesertaController@dashboard')->name('dashboard-peserta');
+		Route::post('/update/status', 'TrainingController@updateStatusPelatihan')->name('update-status');
 		Route::patch('/update', 'PesertaController@update')->name('update-peserta');
 		Route::patch('/update-password', 'PesertaController@updatePassword')->name('update-password');
 		Route::post('/logout', 'PesertaController@logoutUser')->name('logout-peserta');
 		Route::group(['prefix' => 'pelatihan'], function (){
-			Route::get('materi/{id}', 'TrainingController@startTraining')->name('dashboard-pelatihan');
-			Route::get('sidebar/{id}', 'TrainingController@sidebar')->name('sidebar-pelatihan');	
+			Route::get('dashboard/{id}', 'TrainingController@startTraining')->name('dashboard-pelatihan');
+			Route::get('sidebar/{id}/{judul}', 'TrainingController@sidebar')->name('sidebar-pelatihan');
+			Route::get('materi/{pelatihan_id}/{judul}', 'TrainingController@materi')->name('materi-pelatihan');
+			Route::post('/confirm', 'QuizController@confirm')->name('confirm-soal');
 		});
 		
 	});
@@ -116,7 +122,21 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/edit/{id}', 'MateriPelatihanController@edit')->name('edit-quiz');
 			Route::post('/update/{id}', 'MateriPelatihanController@update')->name('update-quiz');
 			Route::post('/delete/{id}', 'MateriPelatihanController@destroy')->name('delete-quiz');
+
+			// QUIZ
+			Route::group(['prefix' => 'quiz'], function(){
+				Route::get('/{judul}/create', 'QuizController@create')->name('create-soal');
+				Route::get('/{judul}/index', 'QuizController@index')->name('index-soal');
+				Route::post('/store', 'QuizController@store')->name('store-soal');
+				Route::get('/edit/{id}', 'QuizController@edit')->name('edit-soal');
+				Route::get('/update/{id}', 'QuizController@update')->name('update-soal');
+				Route::get('/delete/{id}', 'QuizController@destroy')->name('delete-soal');
+				
+			});
 		});
+
+		 
+		
 
 		// Voucher Training
 		Route::get('/voucher/create', 'VoucherTrainingController@index')->name('create-voucher');
